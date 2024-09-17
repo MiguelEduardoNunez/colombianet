@@ -38,7 +38,6 @@
 
                     <x-text size="h6" color="black" :value="__('Enfermedades')" class="mt-4"/>
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$historia_clinica->enfermedades" />
-                        
 
                     <x-text size="h6" color="black" :value="__('Fecha de Nacimiento')" class="mt-4"/>
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$empleado->fecha_nacimiento" />
@@ -57,7 +56,6 @@
 
                     <x-text size="h6" color="black" :value="__('Estrato')" class="mt-4"/>
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$empleado->estrato" />
-
 
                     <x-text size="h6" color="black" :value="__('Eps')" class="mt-4"/>
                     <a href="{{ asset('storage/' . $empleado->eps_pdf) }}" target="_blank">Ver Certificado EPS</a>

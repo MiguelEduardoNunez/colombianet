@@ -11,7 +11,6 @@ use RealRashid\SweetAlert\Facades\Alert;
 use Illuminate\Validation\Rule;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
-use PhpParser\Node\Expr\Cast\String_;
 
 class CategoriaSubcategoriaController extends Controller
 {

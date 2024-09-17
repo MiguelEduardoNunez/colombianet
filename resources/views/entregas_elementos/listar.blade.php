@@ -58,16 +58,19 @@
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="{{ route('proyectos.entregas-elementos.reporte', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}" class="text-info">
+                                            <a href="{{ route('proyectos.entregas-elementos.reporte', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}" class="text-info" target="_blank">
                                                 <i class="fas fa-file-download" data-toggle="tooltip" title="Descargar Entrega de Elementos"></i>
                                             </a>
                                         </div>
 
                                         <div class="col-2">
-                                            <a href="{{ route('proyectos.entregas-elementos.reporte_devolucion', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}" class="text-info">
-                                                <i class="fas fa-file-download" data-toggle="tooltip" title="Descargar Devolucion de Elementos"></i>
-                                            </a>
+                                            {{-- Mostrar el enlace si la entrega de elementos tiene devoluciones --}}
+                                                <a href="{{ route('proyectos.entregas-elementos.reporte_devolucion', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}" class="text-info" target="_blank">
+                                                    <i class="fas fa-undo-alt" data-toggle="tooltip" title="Descargar Devolución de Elementos"></i>
+                                                </a>
                                         </div>
+                                        
+                                        
 
                                     </div>
                                 </td>

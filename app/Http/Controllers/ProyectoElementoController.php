@@ -6,21 +6,15 @@ use App\Imports\ElementoImport;
 use App\Models\Categoria;
 use App\Models\Elemento;
 use App\Models\Item;
-use App\Models\Novedad;
 use App\Models\Proyecto;
 use App\Models\ProyectoElemento;
 use App\Models\Stand;
 use App\Models\Subcategoria;
 use App\Models\TipoCantidad;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Barryvdh\DomPDF\PDF as DomPDFPDF;
-use Dompdf\Dompdf;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 

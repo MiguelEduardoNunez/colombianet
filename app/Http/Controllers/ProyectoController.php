@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Elemento;
 use App\Models\Proyecto;
-use App\Models\ProyectoElemento;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;

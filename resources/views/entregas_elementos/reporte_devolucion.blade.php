@@ -97,7 +97,7 @@
                         <td>{{ $detalle_entrega_elemento->elemento->marca }}</td>
                         <td>{{ $detalle_entrega_elemento->elemento->modelo }}</td>
                         <td>{{ $detalle_entrega_elemento->elemento->tipoCantidad->tipo_cantidad }}</td>
-                        <td>{{ $detalle_entrega_elemento->cantidad }}</td>
+                        <td>{{ $detalle_entrega_elemento->cantidad_devolucionada ?: 'N/A' }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -107,8 +107,7 @@
         <div>
             <p>Manifiesto que:</p>
             <ul>
-                <li>He recibido los equipos de la devoluvión en buen estado.</li>
-              
+                <li>He recibido los equipos de la devolución en buen estado.</li>
             </ul>
         </div>
 
@@ -118,16 +117,15 @@
                     <tr>
                         <th>Entregado por:</th>
                         <th>Cargo:</th>
-
                         <th>Recibido por:</th>
                         <th>Cargo:</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td></td>
+                        <td>{{ $entrega_elemento->empleado->nombres_completos }}</td>
                         <td>Técnico</td>
-                        <td>LEIDY VIVIANA BOLAÑOS</td>
+                        <td>Leidy Viviana Bolaños</td>
                         <td>Almacén</td>
                     </tr>
                     <tr>
@@ -138,7 +136,7 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td></td>
+                        <td>{{ $entrega_elemento->empleado->documento }}</td>
                         <td></td>
                         <td>1061720521</td>
                     </tr>

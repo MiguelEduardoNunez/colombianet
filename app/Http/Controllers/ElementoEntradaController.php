@@ -10,7 +10,6 @@ use App\Models\Proyecto;
 use App\Models\Subcategoria;
 use Illuminate\Http\Request;
 use RealRashid\SweetAlert\Facades\Alert;
-use Termwind\Components\Element;
 
 class ElementoEntradaController extends Controller
 {

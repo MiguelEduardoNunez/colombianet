@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ArchivoCurso;
 use App\Models\Arl;
 use App\Models\CargoEmpleado;
 use App\Models\ContactoEmergencia;
 use App\Models\Curso;
-use App\Models\CursoRealizado;
 use App\Models\Departamento;
 use App\Models\Empleado;
 use App\Models\EntregaElemento;
@@ -23,7 +21,6 @@ use App\Models\TipoDocumento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-use PgSql\Lob;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class EmpleadoController extends Controller

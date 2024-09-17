@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DetalleEntregaElemento extends Model
 {
@@ -22,13 +23,20 @@ class DetalleEntregaElemento extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'entrega_elemento_id';
+    protected $primaryKey = 'id_detalle_entrega_elemento';
 
     /**
      * Names of the timestamps.
      */
     const CREATED_AT='creado_en';
     const UPDATED_AT='actualizado_en';
+
+    protected $fillable = [
+        'entrega_elemento_id ',
+        'elemento_id ',
+        'cantidad',
+        'cantidad_devolucionada',
+    ];
     
     /**
      * Relationships associated with the model.
@@ -43,9 +51,9 @@ class DetalleEntregaElemento extends Model
         return $this->belongsTo(Elemento::class, 'elemento_id', 'id_elemento');
     }
 
-    public function devolucionElemento(): BelongsTo
+    public function devolucionElementos(): HasMany
     {
-        return $this->belongsTo(DevolucionElemento::class, 'devolucion_elemento_id', 'id_devolucion_elemento');
+        return $this->hasMany(DevolucionElemento::class, 'detalle_entrega_id', 'entrega_elemento_id');
     }
     
 }
