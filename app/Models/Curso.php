@@ -13,7 +13,7 @@ class Curso extends Model
      *
      * @var string
      */
-    protected $table = 'curso';
+    protected $table = 'cursos';
   
 
 

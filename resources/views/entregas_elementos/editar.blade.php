@@ -9,8 +9,7 @@
             </a>
         </div>
         <div class="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-2">
-            <form method="POST"
-                action="{{ route('proyectos.entregas-elementos.update', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}">
+            <form method="POST" action="{{ route('proyectos.entregas-elementos.update', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}">
                 @csrf
                 @method('PUT')
                 <x-card>

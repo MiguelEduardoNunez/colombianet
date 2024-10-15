@@ -210,6 +210,7 @@
                                         </x-select>
                                         <x-input-error :messages="$errors->get('arl')" />
                                     </div>
+
                                     <div class="form-group col-md-6">
                                         <x-input-label :value="__('Certificado ARL en PDF')" for="arl_pdf" :obligatorio=false />
                                         <div class="input-group">
@@ -222,6 +223,7 @@
                                         </div>
                                         <x-input-error :messages="$errors->get('arl_pdf')" />
                                     </div>
+
                                     <div class="form-group col-md-6">
                                         <x-input-label :value="__('Nivel de Riesgo')" for="nivel_riesgo" :obligatorio=false />
                                         <x-input type="number" id="nivel_riesgo" name="nivel_riesgo"
@@ -249,14 +251,13 @@
                                         <x-input-label :value="__('Certificado EPS en PDF')" for="eps_pdf" :obligatorio=false />
                                         <div class="input-group">
                                             <div class="custom-file">
-                                                <input type="file" class="custom-file-input" id="eps_pdf"
-                                                    name="eps_pdf">
-                                                <label class="custom-file-label" for="eps_pdf">Seleccionar
-                                                    archivo</label>
+                                                <input type="file" class="custom-file-input" id="eps_pdf" name="eps_pdf">
+                                                <label class="custom-file-label" for="eps_pdf">Seleccionar archivo</label>
                                             </div>
                                         </div>
                                         <x-input-error :messages="$errors->get('eps_pdf')" />
                                     </div>
+                                    
                                     <div class="form-group col-md-6">
                                         <x-input-label :value="__('Fondo de Pensión')" for="fondo_pension" :obligatorio=false />
                                         <x-select :elements="$fondos_pensiones" identifier="id_fondo_pension"
@@ -337,9 +338,6 @@
                                     <!-- Aquí se agregarán los cursos nuevos -->
                                 </div>
 
-
-
-
                                 <x-button type="submit" class="mt-3">
                                     {{ __('Registrar') }}
                                 </x-button>
@@ -386,6 +384,7 @@
         });
     });
     let currentSection = 1;
+
 
     function nextTab(currentTab) {
         let nextTabId;

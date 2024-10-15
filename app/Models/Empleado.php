@@ -95,10 +95,11 @@ class Empleado extends Model
         return $this->hasMany(HistoriaClinica::class, 'empleado_id', 'id_empleado');
     }
 
-    public function curso(): BelongsToMany
+    public function cursos(): BelongsToMany
     {
-        return $this->belongsToMany(Curso::class, 'empleado_id', 'id_empleado');
+        return $this->belongsToMany(Curso::class, 'empleados_cursos', 'empleado_id', 'curso_id');
     }
+
 
     public function contactoEmergencia(): HasMany
     {

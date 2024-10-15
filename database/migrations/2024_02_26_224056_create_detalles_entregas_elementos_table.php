@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detalles_entregas', function (Blueprint $table) {
+        Schema::create('detalles_entregas_elementos', function (Blueprint $table) {
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
 
@@ -19,6 +19,7 @@ return new class extends Migration
             $table->integer('entrega_elemento_id');
             $table->integer('elemento_id');
             $table->float('cantidad');
+            $table->float('cantidad_devolucionada')->default(0);// Cantidad devuelta por el cliente valor por defecto 0
             $table->timestamp('creado_en');
             $table->timestamp('actualizado_en')->nullable();
         });

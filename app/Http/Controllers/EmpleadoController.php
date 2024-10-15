@@ -21,6 +21,7 @@ use App\Models\TipoDocumento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
 class EmpleadoController extends Controller
@@ -74,9 +75,6 @@ class EmpleadoController extends Controller
      */
     public function store(Request $request)
     {
-        //($request->file('certificados_cursos_pdf'));
-
-        //dd($request->all());
         try {
             // Validar los datos del request
             $validaciones = $request->validate([
@@ -170,23 +168,22 @@ class EmpleadoController extends Controller
                 foreach ($request->file('certificados_cursos_pdf') as $index => $file) {
                     // Guardar el archivo del certificado
                     $filePath = $file->store('certificados_cursos', 'public');
-                    
+
                     // Crear el curso solo si no existe con ese nombre
                     $curso = Curso::firstOrCreate([
-                        'nombre_curso' => $request->cursos_realizados[$index]
+                        'nombre_curso' => $request->cursos_realizados[$index],
                     ]);
 
-                    DB::table('empleado_curso')->insert([
-                        'empleado_id' => $empleado->id_empleado,  // Asumimos que $empleado es el objeto del empleado
+                    DB::table('empleados_cursos')->insert([
+                        'empleado_id' => $empleado->id_empleado, // Asumimos que $empleado es el objeto del empleado
                         'curso_id' => $curso->id_curso,
-                        'certificado_pdf' => $filePath,  // Guardar el path del archivo del certificado
+                        'certificado_pdf' => $filePath, // Guardar el path del archivo del certificado
                     ]);
                 }
             }
-            
+
             Alert::success('Registrado', 'Empleado con éxito');
             return redirect(route('empleados.index'));
-
         } catch (\Exception $e) {
             // Registrar el error en el log
             Log::error('Error al guardar el empleado: ' . $e->getMessage());
@@ -204,18 +201,48 @@ class EmpleadoController extends Controller
     {
         $empleado = Empleado::find($id_empleado);
         $historia_clinica = HistoriaClinica::where('empleado_id', '=', $id_empleado)->first();
+        $contacto_emergencia = ContactoEmergencia::where('empleado_id', '=', $id_empleado)->first();
+        // Unir empleados_cursos con cursos y traer tanto el nombre del curso como el certificado PDF
+        $cursos = DB::table('empleados_cursos')
+            ->join('cursos', 'empleados_cursos.curso_id', '=', 'cursos.id_curso')
+            ->select('cursos.nombre_curso', 'empleados_cursos.certificado_pdf') // Selecciona el nombre del curso y el certificado
+            ->where('empleados_cursos.empleado_id', '=', $id_empleado)
+            ->get();
 
-        return view('empleados.mostrar', ['empleado' => $empleado, 'historia_clinica' => $historia_clinica]);
+        return view('empleados.mostrar', ['empleado' => $empleado, 'historia_clinica' => $historia_clinica, 'contacto_emergencia' => $contacto_emergencia, 'cursos' => $cursos]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id_empleado)
     {
-        $empleado = Empleado::find($id);
+        $empleado = Empleado::find($id_empleado);
+        $tipos_documentos = TipoDocumento::all();
+        $departamentos = Departamento::all();
+        $municipios = Municipio::all();
+        $tipos_sangre = collect(['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'])->map(function ($tipo) {
+            return (object) ['id_tipo_sangre' => $tipo, 'tipo_sangre' => $tipo];
+        });
+        $historia_clinica = HistoriaClinica::where('empleado_id', '=', $id_empleado)->first();
+        $cargos_empleados = CargoEmpleado::all();
+        $estados = collect(['Empleado', 'Retirado', 'Prospecto', 'Renuncia', 'Aprendiz', 'Despido'])->map(function ($tipo) {
+            return (object) ['id_estado' => $tipo, 'estado' => $tipo];
+        });
+        $tipos_contratos = TipoContrato::all();
+        $niveles_educativos = NivelEducativo::all();
+        $arls = Arl::all();
+        $eps = Eps::all();
+        $fondos_pensiones = FondoPension::all();
+        $fondos_cesantias = FondoCesantia::all();
+        $cursos = $empleado->cursos()->select('id_curso', 'nombre_curso', 'certificado_pdf')->get();
 
-        return view('empleados.editar', ['empleado' => $empleado]);
+        $contacto_emergencia = ContactoEmergencia::where('empleado_id', '=', $id_empleado)->first();
+
+        return view('empleados.editar', ['empleado' => $empleado, 'tipos_documentos' => $tipos_documentos, 'municipios' => $municipios, 'tipos_sangre' => $tipos_sangre, 
+        'historia_clinica' => $historia_clinica, 'cargos_empleados' => $cargos_empleados, 'estados' => $estados, 'tipos_contratos' => $tipos_contratos, 'niveles_educativos' => $niveles_educativos,
+        'arls' => $arls, 'eps' => $eps, 'fondos_pensiones' => $fondos_pensiones, 'fondos_cesantias' => $fondos_cesantias, 'contacto_emergencia' => $contacto_emergencia, 'cursos' => $cursos,
+        'departamentos' => $departamentos]);
     }
 
     /**
@@ -223,13 +250,119 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        // dd($request->all());
         $validaciones = $request->validate([
-            'empleado' => ['required', 'string', 'max:100'],
+            'nombres_completos' => ['required', 'string', 'max:100'],
+            'apellidos_completos' => ['required', 'string', 'max:100'],
+            'tipo_documento' => ['required', 'numeric', 'exists:tipos_documentos,id_tipo_documento'],
+            'documento' => ['required', 'string', 'max:20', Rule::unique('empleados')->ignore($id, 'id_empleado')],
+            'municipio' => ['required', 'numeric', 'exists:municipios,id_municipio'],
+            'fecha_expedicion' => ['required', 'date'],
+            'tipo_sangre' => ['required', 'in:A+,A-,B+,B-,AB+,AB-,O+,O-'],
+            'historia_clinica.alergias' => ['nullable', 'string', 'max:150'],
+            'historia_clinica.enfermedades' => ['nullable', 'string', 'max:150'],
+            'fecha_nacimiento' => ['required', 'date'],
+            'edad' => ['required', 'numeric'],
+            'telefono' => ['required', 'string', 'max:10'],
+            'email' => ['required', 'email', 'max:100', Rule::unique('empleados')->ignore($id, 'id_empleado')],
+            'direccion' => ['required', 'string', 'max:100'],
+            'estrato' => ['required', 'numeric'],
+            'cargo_empleado' => ['required', 'numeric', 'exists:cargos_empleados,id_cargo_empleado'],
+            'fecha_inicio_contrato' => ['nullable', 'date'],
+            'tipo_contrato' => ['nullable', 'numeric', 'exists:tipos_contratos,id_tipo_contrato'],
+            'nivel_educativo' => ['nullable', 'numeric', 'exists:niveles_educativos,id_nivel_educativo'],
+            'arl' => ['nullable', 'numeric', 'exists:arl,id_arl'],
+            'arl_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
+            'nivel_riesgo' => ['nullable', 'integer', 'min:1', 'max:5'],
+            'eps' => ['nullable', 'numeric', 'exists:eps,id_eps'],
+            'eps_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
+            'estado' => ['required', 'in:Empleado,Retirado,Prospecto,Renuncia,Aprendiz,Despido'],
+            'fondo_cesatia_id' => ['nullable', 'numeric', 'exists:fondos_cesantias,id_fondo_cesantia'],
+            'fondo_pension_id' => ['nullable', 'numeric', 'exists:fondos_pensiones,id_fondo_pension'],
+            'nombre_acudiente' => ['required', 'string', 'max:150'],
+            'parentesco_acudiente' => ['required', 'string', 'max:50'],
+            'telefono_acudiente' => ['required', 'string', 'max:10'],
+
+            'nombre_curso' => ['nullable', 'array'],
+            'nombre_curso.*' => ['string', 'max:100'],
+            'certificado_curso_pdf.*' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
         ]);
 
         $empleado = Empleado::find($id);
-        $empleado->empleado = $request->empleado;
+        $empleado->nombres_completos = $request->nombres_completos;
+        $empleado->apellidos_completos = $request->apellidos_completos;
+        $empleado->tipo_documento_id = $request->tipo_documento;
+        $empleado->documento = $request->documento;
+        $empleado->lugar_expedicion_id = $request->municipio;
+        $empleado->fecha_expedicion = $request->fecha_expedicion;
+        $empleado->tipo_sangre = $request->tipo_sangre;
+        $empleado->fecha_nacimiento = $request->fecha_nacimiento;
+        $empleado->edad = $request->edad;
+        $empleado->telefono = $request->telefono;
+        $empleado->email = $request->email;
+        $empleado->direccion = $request->direccion;
+        $empleado->estrato = $request->estrato;
+        $empleado->cargo_empleado_id = $request->cargo_empleado;
+        $empleado->fecha_inicio_contrato = $request->fecha_inicio_contrato;
+        $empleado->fecha_periodo_prueba = $request->fecha_periodo_prueba;
+        $empleado->fecha_fin_contrato = $request->fecha_fin_contrato;
+        $empleado->tipo_contrato_id = $request->tipo_contrato;
+        $empleado->nivel_educativo_id = $request->nivel_educativo;
+        $empleado->arl_id = $request->arl;
+        if ($request->hasFile('arl_pdf')) {
+            $empleado->arl_pdf = $request->file('arl_pdf')->store('certificados_arl', 'public');
+        }
+        $empleado->nivel_riesgo = $request->nivel_riesgo;
+        $empleado->eps_id = $request->eps;
+        if ($request->hasFile('eps_pdf')) {
+            $empleado->eps_pdf = $request->file('eps_pdf')->store('certificados_eps', 'public');
+        }
+        $empleado->estado = $request->estado;
+        $empleado->fondo_pension_id = $request->fondo_pension;
+        $empleado->fondo_cesantia_id = $request->fondo_cesantia;
         $empleado->save();
+
+        $historia_clinica = HistoriaClinica::where('empleado_id', '=', $id)->first();
+        $historia_clinica->alergias = $request->alergias;
+        $historia_clinica->enfermedades = $request->enfermedades;
+        $historia_clinica->save();
+
+        $contacto_emergencia = ContactoEmergencia::where('empleado_id', '=', $id)->first();
+        $contacto_emergencia->nombre_acudiente = $request->nombre_acudiente;
+        $contacto_emergencia->parentesco_acudiente = $request->parentesco_acudiente;
+        $contacto_emergencia->telefono_acudiente = $request->telefono_acudiente;
+        $contacto_emergencia->save();
+
+        if ($request->has('certificado_curso_pdf')) {
+            foreach ($request->certificado_curso_pdf as $id_curso => $certificado) {
+                if ($certificado) {
+                    // Guardar el nuevo archivo y actualizar la relación
+                    $filePath = $certificado->store('certificados_cursos', 'public');
+                    DB::table('empleados_cursos')
+                        ->where('empleado_id', $empleado->id_empleado)
+                        ->where('curso_id', $id_curso)
+                        ->update(['certificado_pdf' => $filePath]);
+                }
+            }
+        }
+
+        if ($request->has('nuevo_curso')) {
+            foreach ($request->nuevo_curso as $index => $nombre_curso) {
+                if ($nombre_curso && $request->hasFile('nuevo_certificado_pdf.'.$index)) {
+                    $filePath = $request->file('nuevo_certificado_pdf.'.$index)->store('certificados_cursos', 'public');
+    
+                    // Crear el curso y guardarlo en la tabla de empleado_curso
+                    $curso = Curso::create(['nombre_curso' => $nombre_curso]);
+    
+                    DB::table('empleados_cursos')->insert([
+                        'empleado_id' => $empleado->id_empleado,
+                        'curso_id' => $curso->id_curso,
+                        'certificado_pdf' => $filePath,
+                    ]);
+                }
+            }
+        }
+
 
         Alert::success('Actualizado', 'Empleado con éxito');
         return redirect(route('empleados.index'));
@@ -252,3 +385,4 @@ class EmpleadoController extends Controller
         return redirect(route('empleados.index'));
     }
 }
+

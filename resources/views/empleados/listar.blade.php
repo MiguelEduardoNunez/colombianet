@@ -46,12 +46,17 @@
                                             </a>
                                         </div>
                                         <div class="col-2">
+                                            <a href="#"
+                                                class="text-primary">
+                                                <i class="far fa-file-alt" data-toggle="tooltip" title="Documentos Empleado"></i>
+                                            </a>
+                                        </div>
+                                        <div class="col-2">
                                             <form method="POST"
                                                 action="{{ route('empleados.destroy', $empleado->id_empleado) }}">
                                                 @csrf @method('DELETE')
                                                 <button type="submit" class="btn p-0">
-                                                    <i class="far fa-trash-alt text-danger" data-toggle="tooltip"
-                                                        title="Eliminar Perfil"></i>
+                                                    <i class="fa fa-ban text-danger" data-toggle="tooltip" title="Suspender"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -65,7 +70,7 @@
                 <x-slot:footer>
                     {{-- <div class="float-right">
                             {{ $empleados->links() }}
-            </div> --}}
+                        </div> --}}
                 </x-slot:footer>
             </x-card>
         </div>
