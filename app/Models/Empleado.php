@@ -105,4 +105,9 @@ class Empleado extends Model
     {
         return $this->hasMany(ContactoEmergencia::class, 'empleado_id', 'id_empleado');
     }
+
+    public function archivosEmpleado(): HasMany
+    {
+        return $this->hasMany(ArchivoEmpleado::class, 'empleado_id', 'id_empleado');
+    }
 }

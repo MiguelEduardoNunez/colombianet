@@ -51,6 +51,7 @@
                                                 <i class="far fa-file-alt" data-toggle="tooltip" title="Documentos Empleado"></i>
                                             </a>
                                         </div>
+                                        
                                         <div class="col-2">
                                             <form method="POST"
                                                 action="{{ route('empleados.destroy', $empleado->id_empleado) }}">

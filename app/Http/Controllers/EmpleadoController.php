@@ -108,7 +108,6 @@ class EmpleadoController extends Controller
                 'nombre_acudiente' => ['required', 'string', 'max:150'],
                 'parentesco_acudiente' => ['required', 'string', 'max:50'],
                 'telefono_acudiente' => ['required', 'string', 'max:10'],
-
                 'nombre_curso' => ['nullable', 'array'],
                 'nombre_curso.*' => ['string', 'max:100'],
                 'certificado_curso_pdf.*' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
@@ -188,7 +187,6 @@ class EmpleadoController extends Controller
             // Registrar el error en el log
             Log::error('Error al guardar el empleado: ' . $e->getMessage());
 
-            // Mostrar mensaje de error al usuario
             Alert::error('Error', 'Ocurrió un error al registrar el empleado.' . $e->getMessage());
             return redirect()->back()->withInput();
         }

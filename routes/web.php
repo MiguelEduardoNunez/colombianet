@@ -4,6 +4,7 @@ use App\Http\Controllers\Administracion\ModuloController;
 use App\Http\Controllers\Administracion\PerfilController;
 use App\Http\Controllers\Administracion\PermisoController;
 use App\Http\Controllers\Administracion\UsuarioController;
+use App\Http\Controllers\ArchivoElementoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ElementoNovedadController;
 use App\Http\Controllers\ItemController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\ProyectoEntradaElementoController;
 use App\Http\Controllers\ProyectoEntregaElementoController;
 use App\Http\Controllers\StandController;
 use App\Http\Controllers\TipoNovedadController;
+use App\Models\ArchivoEmpleado;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -49,7 +51,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 // Rutas Administracion //
 // Rutas Modulos
 Route::resource('/modulos', ModuloController::class)->middleware('auth');
@@ -64,17 +65,18 @@ Route::put('/permisos/{perfil}', [PermisoController::class, 'update'])->name('pe
 // Rutas Usuarios
 Route::resource('/usuarios', UsuarioController::class)->middleware('auth');
 
-
 // Rutas Inventarios //
+
 // Rutas Stands
 Route::resource('/stands', StandController::class)->middleware('auth');
 
+// Rutas Empleados
 Route::resource('/empleados', EmpleadoController::class)->middleware('auth');
 
+// Rutas Categorias
 Route::resource('/categorias', CategoriaController::class)->middleware('auth');
 
-
-
+// Rutass Categorias Subcategorias
 Route::resource('/categorias.subcategorias', CategoriaSubcategoriaController::class)->middleware('auth');
 Route::get('/categorias/{id_categoria}/subcategorias-import', [CategoriaSubcategoriaController::class, 'createImport'])->name('categorias.subcategorias.createImport')->middleware('auth');
 Route::post('/categorias/{id_categoria}/subcategorias-import', [CategoriaSubcategoriaController::class, 'storeImport'])->name('categorias.subcategorias.storeImport')->middleware('auth');
@@ -84,8 +86,14 @@ Route::get('/items-importar/create', [ItemController::class, 'createImport'])->n
 Route::post('/items-importar', [ItemController::class, 'storeImport'])->name('items.storeImport')->middleware('auth');
 Route::resource('/items', ItemController::class)->middleware('auth');
 
+// Rutas Detalle Elementos
 Route::resource('/tipo_novedades', TipoNovedadController::class)->middleware('auth');
 
+// Rutas para archivos de empleados, anidadas bajo empleados
+Route::resource('empleados.archivo_elementos', ArchivoElementoController::class)->middleware('auth');
+
+
+// Rutas Proyectos
 Route::resource('/proyectos', ProyectoController::class)->middleware('auth');
 
 // Rutas Elementos
