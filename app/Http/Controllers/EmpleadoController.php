@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ArchivoEmpleado;
 use App\Models\Arl;
 use App\Models\CargoEmpleado;
 use App\Models\ContactoEmergencia;
@@ -16,6 +17,7 @@ use App\Models\HistoriaClinica;
 use App\Models\Municipio;
 use App\Models\NivelEducativo;
 use App\Models\Novedad;
+use App\Models\TipoArchivo;
 use App\Models\TipoContrato;
 use App\Models\TipoDocumento;
 use Illuminate\Http\Request;
@@ -382,5 +384,77 @@ class EmpleadoController extends Controller
         }
         return redirect(route('empleados.index'));
     }
+
+    public function indexArchivos(string $id_empleado)
+    {
+        $archivos = ArchivoEmpleado::where('empleado_id', $id_empleado)
+        ->orderBy('actualizado_en', 'desc')
+        ->get();
+
+        $tipos_archivos = TipoArchivo::all();
+    
+        // Usamos el map para estructurar los documentos con estado y última actualización
+        $documentos = $tipos_archivos->map(function($tipo_archivo) use ($archivos) {
+            $archivoEmpleado = $archivos->firstWhere('tipo_archivo_id', $tipo_archivo->id_tipo_archivo);
+    
+            $archivoEmpleado = $archivos->firstWhere('tipo_archivo_id', $tipo_archivo->id_tipo_archivo);
+
+            return [
+                'id_tipo_archivo' => $tipo_archivo->id_tipo_archivo,
+                'nombre_documento' => $tipo_archivo->nombre_documento,
+                'ruta' => $archivoEmpleado ? $archivoEmpleado->archivo_empleado_pdf : null,
+                'estado' => $archivoEmpleado ? ($archivoEmpleado->estado ? 'Subido' : 'No Subido') : 'No Subido',
+                'actualizado_en' => $archivoEmpleado ? $archivoEmpleado->actualizado_en : 'Sin Actualización',
+            ];
+        });
+    
+        // Pasamos $id_empleado directamente a la vista
+        return view('archivos_empleados.listar', compact('archivos', 'tipos_archivos', 'documentos', 'id_empleado'));
+    }
+    
+    public function storeArchivo(Request $request, string $id_empleado, string $tipo_archivo_id)
+    {
+        // Validar el archivo
+        $request->validate([
+            'archivo' => 'required|file|mimes:pdf,doc,docx,jpg,png|max:5120',
+        ]);
+    
+        $empleado = Empleado::findOrFail($id_empleado);
+        $tipo_archivo = TipoArchivo::findOrFail($tipo_archivo_id);
+        // Subir el archivo si existe
+        if ($request->hasFile('archivo')) {
+            $archivo = $request->file('archivo');
+            $nombreArchivo = time() . '_' . $archivo->getClientOriginalName();
+            $ruta = $archivo->storeAs('archivos_empleados', $nombreArchivo, 'public');
+
+            // Guardar el registro en la base de datos
+            ArchivoEmpleado::create([
+                'empleado_id' => $empleado->id_empleado, // Usar ID del empleado
+                'tipo_archivo_id' => $tipo_archivo->id_tipo_archivo, // Usar ID del tipo de archivo
+                'archivo_empleado_pdf' => $ruta,
+                'estado' => true,
+                'actualizado_en' => now(),
+            ]);
+        }
+    
+        Alert::success('Archivo', 'Subido con éxito');
+        return redirect()->route('empleados.archivos', $id_empleado)->with('success', 'Archivo subido con éxito.');
+    }
+
+    public function mostrarHistorial($id_empleado, $id_documento)
+    {
+        $empleado = Empleado::findOrFail($id_empleado);
+        $tipo_archivo = TipoArchivo::findOrFail($id_documento);
+        // Obtiene el historial del archivo desde la base de datos
+        $historial = ArchivoEmpleado::where('empleado_id', $id_empleado)
+            ->where('tipo_archivo_id', $id_documento)
+            ->orderBy('actualizado_en', 'desc')
+            ->get();
+    
+        // Retorna la vista con el historial del archivo
+        return view('archivos_empleados.historial', compact('empleado', 'historial', 'tipo_archivo', 'id_empleado'));
+    }
+    
+
 }
 

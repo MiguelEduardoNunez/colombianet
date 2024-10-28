@@ -45,9 +45,9 @@
                                                     title="Actualizar Empleado"></i>
                                             </a>
                                         </div>
+
                                         <div class="col-2">
-                                            <a href="#"
-                                                class="text-primary">
+                                            <a href="{{ route('empleados.archivos', $empleado->id_empleado) }}" class="text-primary">
                                                 <i class="far fa-file-alt" data-toggle="tooltip" title="Documentos Empleado"></i>
                                             </a>
                                         </div>

@@ -4,23 +4,20 @@ use App\Http\Controllers\Administracion\ModuloController;
 use App\Http\Controllers\Administracion\PerfilController;
 use App\Http\Controllers\Administracion\PermisoController;
 use App\Http\Controllers\Administracion\UsuarioController;
-use App\Http\Controllers\ArchivoElementoController;
+use App\Http\Controllers\ArchivoEmpleadoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ElementoNovedadController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoriaSubcategoriaController;
-use App\Http\Controllers\DetalleElementoController;
 use App\Http\Controllers\ElementoEntradaController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProyectoElementoController;
-use App\Http\Controllers\ProyectoEntradaElementoController;
 use App\Http\Controllers\ProyectoEntregaElementoController;
 use App\Http\Controllers\StandController;
 use App\Http\Controllers\TipoNovedadController;
-use App\Models\ArchivoEmpleado;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -72,6 +69,12 @@ Route::resource('/stands', StandController::class)->middleware('auth');
 
 // Rutas Empleados
 Route::resource('/empleados', EmpleadoController::class)->middleware('auth');
+Route::get('/empleados/{id_empleado}/archivos', [EmpleadoController::class, 'indexArchivos'])->name('empleados.archivos')->middleware('auth');
+Route::post('/empleados/{id_empleado}/archivos/{tipo_archivo_id}/subir', [EmpleadoController::class, 'storeArchivo'])->name('empleados.archivos.subir')->middleware('auth');
+Route::get('/empleados/{id_empleado}/archivos/{id_documento}/historial', [EmpleadoController::class, 'mostrarHistorial'])->name('empleados.archivos.historial')->middleware('auth');
+
+
+
 
 // Rutas Categorias
 Route::resource('/categorias', CategoriaController::class)->middleware('auth');
@@ -90,7 +93,7 @@ Route::resource('/items', ItemController::class)->middleware('auth');
 Route::resource('/tipo_novedades', TipoNovedadController::class)->middleware('auth');
 
 // Rutas para archivos de empleados, anidadas bajo empleados
-Route::resource('empleados.archivo_elementos', ArchivoElementoController::class)->middleware('auth');
+// Route::resource('empleados.archivo_empleados', ArchivoEmpleadoController::class)->middleware('auth');
 
 
 // Rutas Proyectos
