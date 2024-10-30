@@ -37,12 +37,21 @@
                         </div>
 
                         <div class="form-group">
+                            <x-input-label :value="__('Item')" for="item" />
+                            <x-select :elements="$items" identifier="id_item" label="item" id="item" name="item">
+                                <option selected disabled>{{ __('Seleccionar') }}</option>
+                            </x-select>
+                            <x-input-error :messages="$errors->get('item')" />
+                        </div>
+                        
+                        <div class="form-group">
                             <x-input-label :value="__('Elemento')" for="elemento" />
-                            <x-select :elements="$items" identifier="id_item" label="item" id="elemento" name="elemento">
+                            <x-select :elements="$elementos" identifier="id_elemento" label="marca" id="elemento" name="elemento">
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
                             <x-input-error :messages="$errors->get('elemento')" />
                         </div>
+                        
 
                         <div class="form-group">
                             <x-input-label :value="__('Cantidad')" for="cantidad" />
@@ -85,37 +94,50 @@
     $(function () {
         // Select dinamic
         var subcategorias = {{ Js::from($subcategorias) }};
-        $("#categoria").on("change", function() {
-            $("#subcategoria").empty()
-            $("#subcategoria").prepend("<option selected disabled>Seleccionar</option>")
-
-            $("#elemento").empty()
-            $("#elemento").prepend("<option selected disabled>Seleccionar</option>")
-            
-            var categoria = $(this).val()
-            const resultado = subcategorias.filter(function(subcategoria) {
-                return subcategoria.categoria_id == categoria
-            })
-
-            resultado.forEach(function(res) {
-                $("#subcategoria").append("<option value="+res.id_subcategoria+">"+res.subcategoria+"</option>")
-            })
-        });
-
         var items = {{ Js::from($items) }};
-        $("#subcategoria").on("change", function() {
-            $("#elemento").empty()
-            $("#elemento").prepend("<option selected disabled>Seleccionar</option>")
-            
-            var subcategoria = $(this).val()
-            const resultado = items.filter(function(item) {
-                return item.subcategoria_id == subcategoria
-            })
+        var elementos = {{ Js::from($elementos) }};
 
-            resultado.forEach(function(res) {
-                $("#elemento").append("<option value="+res.id_item+">"+res.item+"</option>")
-            })
+        $("#categoria").on("change", function() {
+            $("#subcategoria").empty().prepend("<option selected disabled>Seleccionar</option>");
+            $("#item").empty().prepend("<option selected disabled>Seleccionar</option>");
+            $("#elemento").empty().prepend("<option selected disabled>Seleccionar</option>");
+
+            var categoria = $(this).val();
+            const resultadoSubcategorias = subcategorias.filter(function(subcategoria) {
+                return subcategoria.categoria_id == categoria;
+            });
+
+            resultadoSubcategorias.forEach(function(res) {
+                $("#subcategoria").append("<option value="+res.id_subcategoria+">"+res.subcategoria+"</option>");
+            });
         });
-    })
+
+        $("#subcategoria").on("change", function() {
+            $("#item").empty().prepend("<option selected disabled>Seleccionar</option>");
+            $("#elemento").empty().prepend("<option selected disabled>Seleccionar</option>");
+
+            var subcategoria = $(this).val();
+            const resultadoItems = items.filter(function(item) {
+                return item.subcategoria_id == subcategoria; // Filtrar ítems por subcategoría
+            });
+
+            resultadoItems.forEach(function(res) {
+                $("#item").append("<option value="+res.id_item+">"+res.item+"</option>");
+            });
+        });
+
+        $("#item").on("change", function() {
+            $("#elemento").empty().prepend("<option selected disabled>Seleccionar</option>");
+
+            var itemId = $(this).val();
+            const resultadoElementos = elementos.filter(function(elemento) {
+                return elemento.item_id == itemId; // Filtrar elementos por ID de ítem
+            });
+
+            resultadoElementos.forEach(function(res) {
+                $("#elemento").append("<option value="+res.id_elemento+">"+res.marca+"</option>"); // Asegúrate de que `marca` sea la propiedad correcta
+            });
+        });
+    });
 </script>
 
