@@ -5,8 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Empleado extends Model
 {
@@ -95,13 +95,19 @@ class Empleado extends Model
         return $this->hasMany(HistoriaClinica::class, 'empleado_id', 'id_empleado');
     }
 
-    public function cursoRealizado(): HasMany
+    public function cursos(): BelongsToMany
     {
-        return $this->hasMany(CursoRealizado::class, 'empleado_id', 'id_empleado');
+        return $this->belongsToMany(Curso::class, 'empleados_cursos', 'empleado_id', 'curso_id');
     }
+
 
     public function contactoEmergencia(): HasMany
     {
         return $this->hasMany(ContactoEmergencia::class, 'empleado_id', 'id_empleado');
+    }
+
+    public function archivosEmpleado(): HasMany
+    {
+        return $this->hasMany(ArchivoEmpleado::class, 'empleado_id', 'id_empleado');
     }
 }

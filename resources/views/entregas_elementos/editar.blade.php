@@ -26,7 +26,7 @@
 
                         <div class="form-group">
                             <x-input-label :value="__('Empleado')" for="empleado" />
-                            <x-input type="text" id="empleado" name="empleado" :value="$entrega_elemento->empleado->empleado" disabled />
+                            <x-input type="text" id="empleado" name="empleado" :value="$entrega_elemento->empleado->nombres_completos" disabled />
                         </div>
 
                         <div class="form-group">

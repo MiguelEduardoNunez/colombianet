@@ -34,7 +34,7 @@ class StandController extends Controller
     public function store(Request $request)
     {
         $validaciones = $request->validate([
-            'stand' => ['required', 'string', 'max:100', 'unique:stands,stand'],
+            'stand' => ['required', 'string', 'max:100'],
             'ubicacion' => ['required', 'string', 'max:100'],
             'descripcion' => ['nullable', 'string']
         ]);

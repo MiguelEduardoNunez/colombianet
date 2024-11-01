@@ -25,7 +25,7 @@
 
                         <div class="form-group" id="val_empleado">
                             <x-input-label :value="__('Empleado')" for="empleado" />
-                            <x-select :elements="$empleados" identifier="id_empleado" label="empleado" id="empleado"
+                            <x-select :elements="$empleados" identifier="id_empleado" label="nombres_completos" id="empleado"
                                 name="empleado">
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
@@ -62,10 +62,10 @@
 
                         <div class="form-group" id="val_elemento">
                             <x-input-label :value="__('Elemento')" for="elemento" />
-                            <x-select :elements="[]" identifier="id_item" label="item" id="elemento"
-                                name="elemento" />
+                            <x-select :elements="$elementos" identifier="id_item" label="concatenated" id="elemento" name="elemento" />
                             <x-input-error :messages="$errors->get('elemento')" />
                         </div>
+
 
                         <div class="form-group">
                             <x-input-label :value="__('Tipo de Cantidad')" :obligatorio="false" for="tipo_cantidad" />

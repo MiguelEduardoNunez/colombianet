@@ -27,6 +27,10 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `categorias`
 --
 
+CREATE DATABASE inventarios_sena;
+USE inventarios_sena;
+
+
 CREATE TABLE `categorias` (
   `idcategorias` int(11) NOT NULL,
   `nombre_categoria` varchar(100) NOT NULL,

@@ -4,17 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class CursoRealizado extends Model
+class Curso extends Model
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'cursos_realizados';
+    protected $table = 'cursos';
   
 
 
@@ -23,7 +22,7 @@ class CursoRealizado extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'id_curso_realizado';
+    protected $primaryKey = 'id_curso';
 
     /**
      * Names of the timestamps.
@@ -31,17 +30,18 @@ class CursoRealizado extends Model
     const CREATED_AT = 'creado_en';
     const UPDATED_AT = 'actualizado_en';
 
+    protected $fillable = [
+        'id_curso',
+        'nombre_curso',
+    ];
+
     /**
      * Relationships associated with the model.
      */
-    public function empleado(): BelongsTo
+    public function empleado(): BelongsToMany
     {
-        return $this->belongsTo(Empleado::class, 'empleado_id', 'id_empleado');
+        return $this->belongsToMany(Empleado::class, 'empleado_id', 'id_empleado');
     }
-    public function archivos(): HasMany
-    {
-        return $this->hasMany(ArchivoCurso::class, 'curso_realizado_id');
-    }
-
+   
     use HasFactory;
 }

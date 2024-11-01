@@ -4,18 +4,17 @@ use App\Http\Controllers\Administracion\ModuloController;
 use App\Http\Controllers\Administracion\PerfilController;
 use App\Http\Controllers\Administracion\PermisoController;
 use App\Http\Controllers\Administracion\UsuarioController;
+use App\Http\Controllers\ArchivoEmpleadoController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\ElementoNovedadController;
 use App\Http\Controllers\ItemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoriaSubcategoriaController;
-use App\Http\Controllers\DetalleElementoController;
 use App\Http\Controllers\ElementoEntradaController;
 use App\Http\Controllers\EmpleadoController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\ProyectoController;
 use App\Http\Controllers\ProyectoElementoController;
-use App\Http\Controllers\ProyectoEntradaElementoController;
 use App\Http\Controllers\ProyectoEntregaElementoController;
 use App\Http\Controllers\StandController;
 use App\Http\Controllers\TipoNovedadController;
@@ -49,7 +48,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-
 // Rutas Administracion //
 // Rutas Modulos
 Route::resource('/modulos', ModuloController::class)->middleware('auth');
@@ -64,17 +62,24 @@ Route::put('/permisos/{perfil}', [PermisoController::class, 'update'])->name('pe
 // Rutas Usuarios
 Route::resource('/usuarios', UsuarioController::class)->middleware('auth');
 
-
 // Rutas Inventarios //
+
 // Rutas Stands
 Route::resource('/stands', StandController::class)->middleware('auth');
 
+// Rutas Empleados
 Route::resource('/empleados', EmpleadoController::class)->middleware('auth');
+Route::get('/empleados/{id_empleado}/archivos', [EmpleadoController::class, 'indexArchivos'])->name('empleados.archivos')->middleware('auth');
+Route::post('/empleados/{id_empleado}/archivos/{tipo_archivo_id}/subir', [EmpleadoController::class, 'storeArchivo'])->name('empleados.archivos.subir')->middleware('auth');
+Route::get('/empleados/{id_empleado}/archivos/{id_documento}/historial', [EmpleadoController::class, 'mostrarHistorial'])->name('empleados.archivos.historial')->middleware('auth');
 
+
+
+
+// Rutas Categorias
 Route::resource('/categorias', CategoriaController::class)->middleware('auth');
 
-
-
+// Rutass Categorias Subcategorias
 Route::resource('/categorias.subcategorias', CategoriaSubcategoriaController::class)->middleware('auth');
 Route::get('/categorias/{id_categoria}/subcategorias-import', [CategoriaSubcategoriaController::class, 'createImport'])->name('categorias.subcategorias.createImport')->middleware('auth');
 Route::post('/categorias/{id_categoria}/subcategorias-import', [CategoriaSubcategoriaController::class, 'storeImport'])->name('categorias.subcategorias.storeImport')->middleware('auth');
@@ -84,8 +89,14 @@ Route::get('/items-importar/create', [ItemController::class, 'createImport'])->n
 Route::post('/items-importar', [ItemController::class, 'storeImport'])->name('items.storeImport')->middleware('auth');
 Route::resource('/items', ItemController::class)->middleware('auth');
 
+// Rutas Detalle Elementos
 Route::resource('/tipo_novedades', TipoNovedadController::class)->middleware('auth');
 
+// Rutas para archivos de empleados, anidadas bajo empleados
+// Route::resource('empleados.archivo_empleados', ArchivoEmpleadoController::class)->middleware('auth');
+
+
+// Rutas Proyectos
 Route::resource('/proyectos', ProyectoController::class)->middleware('auth');
 
 // Rutas Elementos
@@ -110,6 +121,7 @@ Route::middleware('auth')->group(function () {
 
 // Rutas Entregas de Elementos
 Route::get('/proyectos/{proyecto}/entregas-elementos/{entrega_elemento}/reporte', [ProyectoEntregaElementoController::class, 'reporte'])->name('proyectos.entregas-elementos.reporte');
+Route::get('/proyectos/{proyecto}/entregas-elementos/{entrega_elemento}/reporte_devolucion', [ProyectoEntregaElementoController::class, 'reporteDevolucion'])->name('proyectos.entregas-elementos.reporte_devolucion');
 Route::resource('/proyectos.entregas-elementos', ProyectoEntregaElementoController::class)->middleware('auth');
 
 //Ruta Detalle Elementos

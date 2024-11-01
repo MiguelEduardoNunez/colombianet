@@ -48,7 +48,10 @@ class ProyectoElementoController extends Controller
     {
         $proyecto = Proyecto::find($id_proyecto);
 
-        $stands = Stand::orderBy('stand', 'asc')->get();
+        $stands = Stand::all()->map(function($stand) {
+            $stand->concatenated = $stand->stand . ' - ' . $stand->ubicacion;
+            return $stand;
+        });
 
         $categorias = Categoria::orderBy('categoria', 'asc')->get();
 

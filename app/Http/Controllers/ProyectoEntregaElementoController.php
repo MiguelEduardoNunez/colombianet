@@ -38,16 +38,22 @@ class ProyectoEntregaElementoController extends Controller
     {
         $proyecto = Proyecto::find($id_proyecto);
 
-        $empleados = Empleado::orderBy('empleado', 'asc')->get();
+        $empleados = Empleado::orderBy('nombres_completos', 'asc')->get();
 
         $categorias = Categoria::orderBy('categoria', 'asc')->get();
 
         $subcategorias = Subcategoria::orderBy('subcategoria', 'asc')->get();
 
         $elementos = Elemento::with(['item', 'tipoCantidad'])
-            ->where('proyecto_id', '=', $id_proyecto)
-            ->orderBy('marca', 'asc')
-            ->get();
+        ->where('proyecto_id', '=', $id_proyecto)
+        ->orderBy('marca', 'asc')
+        ->get()
+        ->map(function ($elemento) {
+        // Asegúrate de que el elemento y el item existen antes de concatenar
+        $elemento->concatenated = $elemento->item->item . ' - ' . $elemento->serial;
+        return $elemento;
+    });
+
         
         return view('entregas_elementos.crear', ['proyecto' => $proyecto, 'empleados' => $empleados, 'categorias' => $categorias,
             'subcategorias' => $subcategorias, 'elementos' => $elementos
