@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detalles_entregas', function (Blueprint $table) {
+        Schema::create('cursos', function (Blueprint $table) {
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
 
-            $table->integer('id_detalle_entrega')->autoIncrement();
-            $table->integer('entrega_elemento_id');
-            $table->integer('elemento_id');
-            $table->float('cantidad');
+            $table->integer('id_curso')->autoIncrement();
+            $table->string('nombre_curso', '150');
             $table->timestamp('creado_en');
             $table->timestamp('actualizado_en')->nullable();
         });
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('detalles_entregas');
+        Schema::dropIfExists('cursos');
     }
 };
