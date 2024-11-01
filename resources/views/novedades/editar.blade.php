@@ -13,7 +13,6 @@
             <form method="POST" action="{{route('elementos.novedades.update', [$elemento->id_elemento, $novedad->id_novedad])}}">
                 @csrf
                 @method('PUT')
-
                 <x-card>
                     <x-slot:header>
                         <x-text :value="__('Actualizar Novedad')" class="text-center" />
@@ -51,7 +50,7 @@
                         <div class="form-group">
                             <x-input-label :value="__('Empleado')" for="empleado" />
                             <x-select :elements="$empleados" identifier="id_empleado" label="empleado" id="empleado" name="empleado">
-                                <option value="{{ $novedad->empleado_id }}" selected>{{ $novedad->empleado->empleado }}</option>
+                                <option value="{{ $novedad->empleado_id }}" selected>{{ $novedad->empleado->nombres_completos }}</option>
                             </x-select>
                             <x-input-error :messages="$errors->get('empleado')" />
                         </div>
@@ -61,12 +60,6 @@
                             <x-text-area id="novedad" name="novedad" :value="$novedad->novedad" />
                             <x-input-error :messages="$errors->get('novedad')" />
                         </div>
-
-                        {{-- <div class="form-group">
-                            <x-input-label :value="__('Fecha Reporte')" for="fecha_reporte" />
-                            <x-input type="text" id="fecha_reporte" name="fecha_reporte" :value="$novedad->fecha_reporte" />
-                            <x-input-error :messages="$errors->get('fecha_reporte')" />
-                        </div> --}}
 
                         <div class="form-group">
                             <x-input-label :value="__('Fecha Reporte')" for="fecha_reporte" />
@@ -89,13 +82,6 @@
                             </x-input-group>
                             <x-input-error :messages="$errors->get('fecha_cierre')" />
                         </div>
-
-
-                        {{-- <div class="form-group">
-                            <x-input-label :value="__('Fecha Cierre')" for="fecha_cierre" />
-                            <x-input type="text" id="fecha_cierre" name="fecha_cierre" :value="$novedad->fecha_cierre" />
-                            <x-input-error :messages="$errors->get('fecha_cierre')" />
-                        </div> --}}
 
                     </x-slot:body>
 

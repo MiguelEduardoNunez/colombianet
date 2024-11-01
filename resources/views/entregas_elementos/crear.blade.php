@@ -9,8 +9,7 @@
             </a>
         </div>
         <div class="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-2">
-            <form method="POST" action="{{ route('proyectos.entregas-elementos.store', $proyecto->id_proyecto) }}"
-                id="formu">
+            <form method="POST" action="{{ route('proyectos.entregas-elementos.store', $proyecto->id_proyecto) }}" id="formu">
                 @csrf
                 <x-card style="width: 555px">
                     <x-slot:header>
@@ -25,8 +24,7 @@
 
                         <div class="form-group" id="val_empleado">
                             <x-input-label :value="__('Empleado')" for="empleado" />
-                            <x-select :elements="$empleados" identifier="id_empleado" label="nombres_completos" id="empleado"
-                                name="empleado">
+                            <x-select :elements="$empleados" identifier="id_empleado" label="nombres_completos" id="empleado" name="empleado">
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
                             <x-input-error :messages="$errors->get('empleado')" />
@@ -35,8 +33,7 @@
                         <div class="form-group" id="val_fecha_entrega">
                             <x-input-label :value="__('Fecha de Entrega')" for="fecha_entrega" />
                             <x-input-group id="fecha_entrega" data-target-input="nearest">
-                                <x-input type="text" class="datetimepicker-input" id="fecha_entregas"
-                                    name="fecha_entrega" :value="old('fecha_entrega')" data-target="#fecha_entrega" />
+                                <x-input type="text" class="datetimepicker-input" id="fecha_entregas" name="fecha_entrega" :value="old('fecha_entrega')" data-target="#fecha_entrega" />
                                 <x-slot:icon data-target="#fecha_entrega" data-toggle="datetimepicker">
                                     <i class="fas fa-calendar text-primary"></i>
                                 </x-slot:icon>
@@ -46,8 +43,7 @@
 
                         <div class="form-group" id="val_categoria">
                             <x-input-label :value="__('Categoria')" for="categoria" />
-                            <x-select :elements="$categorias" identifier="id_categoria" label="categoria" id="categoria"
-                                name="categoria">
+                            <x-select :elements="$categorias" identifier="id_categoria" label="categoria" id="categoria" name="categoria">
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
                             <x-input-error :messages="$errors->get('categoria')" />
@@ -55,15 +51,13 @@
 
                         <div class="form-group" id="val_subcategoria">
                             <x-input-label :value="__('Subcategoria')" for="subcategoria" />
-                            <x-select :elements="[]" identifier="id_subcategoria" label="subcategoria"
-                                id="subcategoria" name="subcategoria" />
+                            <x-select :elements="[]" identifier="id_subcategoria" label="subcategoria" id="subcategoria" name="subcategoria" />
                             <x-input-error :messages="$errors->get('subcategoria')" />
                         </div>
 
                         <div class="form-group" id="val_elemento">
                             <x-input-label :value="__('Elemento')" for="elemento" />
-                            <x-select :elements="[]" identifier="id_item" label="item" id="elemento"
-                                name="elemento" />
+                            <x-select :elements="[]" identifier="id_item" label="item" id="elemento" name="elemento" />
                             <x-input-error :messages="$errors->get('elemento')" />
                         </div>
 
@@ -91,21 +85,17 @@
 
                         <div class="form-group">
                             <x-text size="h6" color="black" :value="__('Proyecto:')" class="d-inline" />
-                            <x-text size="h6" style="font-weight-normal" color="black" :value="__('')"
-                                class="d-inline" id="proyecto_seleccionado" /><br>
+                            <x-text size="h6" style="font-weight-normal" color="black" :value="__('')" class="d-inline" id="proyecto_seleccionado" /><br>
                             <x-text size="h6" color="black" :value="__('Empleado:')" class="d-inline" />
-                            <x-text size="h6" style="font-weight-normal" color="black" :value="__('')"
-                                class="d-inline" id="empleado_seleccionado" /><br>
+                            <x-text size="h6" style="font-weight-normal" color="black" :value="__('')" class="d-inline" id="empleado_seleccionado" /><br>
                             <x-text size="h6" color="black" :value="__('Fecha de Entrega:')" class="d-inline" />
-                            <x-text size="h6" style="font-weight-normal" color="black" :value="__('')"
-                                class="d-inline" id="fecha_entrega_seleccionada" />
+                            <x-text size="h6" style="font-weight-normal" color="black" :value="__('')"class="d-inline" id="fecha_entrega_seleccionada" />
                         </div>
 
                         <div class="form-group">
                             <x-data-table :headers="['Elemento', 'Tipo de Cantidad', 'Cantidad','Acciones']" id="tabla_entregas">
                             </x-data-table>
                         </div>
-
                     </x-slot:body>
 
                     <x-slot:footer>

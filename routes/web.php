@@ -73,9 +73,6 @@ Route::get('/empleados/{id_empleado}/archivos', [EmpleadoController::class, 'ind
 Route::post('/empleados/{id_empleado}/archivos/{tipo_archivo_id}/subir', [EmpleadoController::class, 'storeArchivo'])->name('empleados.archivos.subir')->middleware('auth');
 Route::get('/empleados/{id_empleado}/archivos/{id_documento}/historial', [EmpleadoController::class, 'mostrarHistorial'])->name('empleados.archivos.historial')->middleware('auth');
 
-
-
-
 // Rutas Categorias
 Route::resource('/categorias', CategoriaController::class)->middleware('auth');
 
@@ -94,7 +91,6 @@ Route::resource('/tipo_novedades', TipoNovedadController::class)->middleware('au
 
 // Rutas para archivos de empleados, anidadas bajo empleados
 // Route::resource('empleados.archivo_empleados', ArchivoEmpleadoController::class)->middleware('auth');
-
 
 // Rutas Proyectos
 Route::resource('/proyectos', ProyectoController::class)->middleware('auth');

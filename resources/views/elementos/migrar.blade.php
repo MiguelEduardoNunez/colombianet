@@ -27,28 +27,27 @@
                                     <input class="form-check-input" type="checkbox" id="seleccionarTodos" onclick="seleccionarTodos()">
                                     <label class="form-check-label" for="seleccionarTodos">Seleccionar todos</label>
                                 </div>
+                                
                                 <hr>
 
                                 @foreach ($elementos as $elemento)
-                                <div class="form-check d-flex align-items-center">
-                                    <input class="form-check-input elemento-checkbox" type="checkbox" id="elemento{{ $elemento->id_elemento }}" name="elementos_seleccionados[]" value="{{ $elemento->id_elemento }}">
-                                    <label class="form-check-label col-6 mb-0" for="elemento{{ $elemento->id_elemento }}">
-                                        {{ $elemento->item->item }} (Disponible: {{ $elemento->cantidad }})
-                                    </label>
-                            
-                                    <div class="col-6">
-                                        <div class="form-group mb-0">
-                                            <x-input-label :value="__('Cantidad a migrar')" for="cantidad{{ $elemento->id_elemento }}" />
-                                            <x-input type="number" id="cantidad{{ $elemento->id_elemento }}" name="cantidades[]" disabled />
-                                            <x-input-error :messages="$errors->get('cantidad')" />
+                                    <div class="form-check d-flex align-items-center">
+                                        <input class="form-check-input elemento-checkbox" type="checkbox" id="elemento{{ $elemento->id_elemento }}" name="elementos_seleccionados[]" value="{{ $elemento->id_elemento }}">
+                                        <label class="form-check-label col-6 mb-0" for="elemento{{ $elemento->id_elemento }}">
+                                            {{ $elemento->item->item }} (Disponible: {{ $elemento->cantidad }})
+                                        </label>
+                                
+                                        <div class="col-6">
+                                            <div class="form-group mb-0">
+                                                <x-input-label :value="__('Cantidad a migrar')" for="cantidad{{ $elemento->id_elemento }}" />
+                                                <x-input type="number" id="cantidad{{ $elemento->id_elemento }}" name="cantidades[]" disabled />
+                                                <x-input-error :messages="$errors->get('cantidad')" />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <x-input-error :messages="$errors->get('elementos_seleccionados')" />
-                                <hr>
+                                    <x-input-error :messages="$errors->get('elementos_seleccionados')" />
+                                    <hr>
                                 @endforeach
-
-
 
                                 <div class="form-group mt-4">
                                     <x-input-label :value="__('Proyecto De Destino')" for="proyecto_destino" />
@@ -57,7 +56,6 @@
                                     </x-select>
                                     <x-input-error :messages="$errors->get('proyecto_destino')" />
                                 </div>
-
                             </div>
                         </x-slot:body>
 

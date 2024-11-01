@@ -6,7 +6,6 @@
         <div class="col-12">
             <x-card>
                 <x-slot:header>
-                    
                     <div class="row align-items-center ">
 
                         <div class="col-auto d-none d-lg-flex ">
@@ -33,11 +32,7 @@
                                 <i class="fas fa-plus-circle fa-2x" data-toggle="tooltip" title="Registrar Novedad"></i>
                             </a>
                         </div>
-
-
                     </div>
-
-
                 </x-slot:header>
 
                 <x-slot:body class="table-responsive p-0" style="height: 400px;">
@@ -48,26 +43,24 @@
                             <td>{{ $elemento->item->item }}</td>
                             <td>{{ $novedad->novedad }}</td>
                             <td>{{ $novedad->tipoNovedad->tipo_novedad }}</td>
-                            <td>{{ $novedad->empleado->empleado }}</td>
+                            <td>{{ $novedad->empleado->nombres_completos }}</td>
                             <td>{{ $novedad->fecha_reporte }}</td>
                             
-             
-
                             <td class="text-center">
-
                                 <div class="row justify-content-center align-items-center">
 
-                                    <div class="">
+                                    <div class="col-3">
                                         <a href="{{route('elementos.novedades.show', [$elemento->id_elemento, $novedad->id_novedad])}}">
                                             <i class="far fa-eye" data-toggle="tooltip" title="Detalles Novedad"></i>
                                         </a>
                                     </div>
 
-                                    <div class="ml-3">
+                                    <div class="col-3">
                                         <a href="{{route('elementos.novedades.edit', [$elemento->id_elemento, $novedad->id_novedad]) }}" class="text-success">
                                             <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Novedad"></i>
                                         </a>
                                     </div>
+
                                     <div class="col-2">
                                         <form method="POST" action="{{route('elementos.novedades.destroy', [$elemento->id_elemento, $novedad->id_novedad])}}">
                                             @csrf
@@ -94,6 +87,5 @@
             </x-card>
         </div>
     </div>
-
 </x-app-layout>
 <x-message-confirm text="Desea eliminar la novedad" />

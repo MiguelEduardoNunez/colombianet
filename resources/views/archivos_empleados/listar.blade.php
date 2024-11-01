@@ -41,6 +41,13 @@
 
                         <td class="text-center">
                             <div class="row justify-content-center align-items-center">
+
+                                <div class="col-4">
+                                    <a href="{{ asset('storage/' . ($documento['ruta'])) }}" target="_blank">
+                                        <i class="far fa-eye" data-toggle="tooltip" title="Ver Archivo"></i>
+                                    </a>
+                                </div>
+
                                 <div class="col-4">
                                     <form action="{{ route('empleados.archivos.subir', ['id_empleado' => $id_empleado, 'tipo_archivo_id' => $documento['id_tipo_archivo']]) }}"
                                           method="POST" enctype="multipart/form-data">
@@ -53,13 +60,7 @@
                                 </div>
 
                                 <div class="col-4">
-                                    <a href="{{ asset('storage/' . ($documento['ruta'])) }}" target="_blank">
-                                        <i class="far fa-eye" data-toggle="tooltip" title="Ver Archivo"></i>
-                                    </a>
-                                </div>
-
-                                <div class="col-4">
-                                    <a href="{{ route('empleados.archivos.historial', ['id_empleado' => $id_empleado, 'id_documento' => $documento['id_tipo_archivo']]) }}" class="text-success">
+                                    <a href="{{ route('empleados.archivos.historial', ['id_empleado' => $id_empleado, 'id_documento' => $documento['id_tipo_archivo']]) }}">
                                         <i class="fas fa-clipboard-list" data-toggle="tooltip" title="Historial de Archivo"></i>
                                     </a>
                                 </div>

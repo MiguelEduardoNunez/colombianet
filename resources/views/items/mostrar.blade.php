@@ -17,12 +17,10 @@
                     <x-slot:body>
 
                         <x-text size="h6" color="black" :value="__('Categoria')" />
-                        <x-text size="h6" style="font-weight-normal" color="black"
-                            :value="$item->subcategoria->categoria->categoria" />
+                        <x-text size="h6" style="font-weight-normal" color="black" :value="$item->subcategoria->categoria->categoria" />
 
                         <x-text size="h6" color="black" :value="__('Subcategoria')" class="mt-4" />
-                        <x-text size="h6" style="font-weight-normal" color="black"
-                            :value="$item->subcategoria->subcategoria" />
+                        <x-text size="h6" style="font-weight-normal" color="black" :value="$item->subcategoria->subcategoria" />
 
                         <x-text size="h6" color="black" :value="__('Item')" class="mt-4" />
                         <x-text size="h6" style="font-weight-normal" color="black" :value="$item->item" />
@@ -34,8 +32,6 @@
                         @else
                         {{ __('No registrada') }}
                         @endif
-
-
                     </x-slot:body>
 
                     <x-slot:footer>

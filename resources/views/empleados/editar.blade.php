@@ -174,7 +174,7 @@
                                             <x-input-label :value="__('Fecha de Inicio del Periodo de Prueba')" for="fecha_periodo_prueba" :obligatorio=false />
                                             <x-input type="date" id="fecha_periodo_prueba" name="fecha_periodo_prueba" :value="$empleado->fecha_periodo_prueba ?? ''" />
                                             @if (!$empleado->fecha_periodo_prueba)
-                                            <small class="text-muted">No hay fecha registrada</small>
+                                                <small class="text-muted">No hay fecha registrada</small>
                                             @endif
                                             <x-input-error :messages="$errors->get('fecha_periodo_prueba')" />
                                         </div>
@@ -183,7 +183,7 @@
                                             <x-input-label :value="__('Fecha de Finalización del Contrato')" for="fecha_fin_contrato" :obligatorio=false />
                                             <x-input type="date" id="fecha_fin_contrato" name="fecha_fin_contrato" :value="$empleado->fecha_fin_contrato ?? ''" />
                                             @if (!$empleado->fecha_fin_contrato)
-                                            <small class="text-muted">No hay fecha registrada</small>
+                                                <small class="text-muted">No hay fecha registrada</small>
                                             @endif
                                             <x-input-error :messages="$errors->get('fecha_fin_contrato')" />
                                         </div>
@@ -221,13 +221,13 @@
                                                 </div>
                                             </div>
                                             @if($empleado->arl_pdf)
-                                            <div class="mt-3">
-                                                <p>Archivo actual:
-                                                    <a href="{{ asset('storage/' . $empleado->arl_pdf) }}" target="_blank">
-                                                        <i class="fas fa-file-pdf fa-1x text-primary"></i><span>
-                                                    </a>
-                                                </p>
-                                            </div>
+                                                <div class="mt-3">
+                                                    <p>Archivo actual:
+                                                        <a href="{{ asset('storage/' . $empleado->arl_pdf) }}" target="_blank">
+                                                            <i class="fas fa-file-pdf fa-1x text-primary"></i><span>
+                                                        </a>
+                                                    </p>
+                                                </div>
                                             @else
                                             <p>No hay un archivo cargado actualmente</p>
                                             @endif
@@ -257,13 +257,13 @@
                                                 </div>
                                             </div>
                                             @if($empleado->eps_pdf)
-                                            <div class="mt-2">
-                                                <p>Archivo actual:
-                                                    <a href="{{ asset('storage/' . $empleado->eps_pdf) }}" target="_blank">
-                                                        <i class="fas fa-file-pdf fa-1x text-primary"></i><span>
-                                                    </a>
-                                                </p>
-                                            </div>
+                                                <div class="mt-2">
+                                                    <p>Archivo actual:
+                                                        <a href="{{ asset('storage/' . $empleado->eps_pdf) }}" target="_blank">
+                                                            <i class="fas fa-file-pdf fa-1x text-primary"></i><span>
+                                                        </a>
+                                                    </p>
+                                                </div>
                                             @else
                                             <p>No hay un archivo cargado actualmente</p>
                                             @endif
@@ -321,15 +321,15 @@
                                         <div class="curso-item col-md-6 mb-3">
                                             <!-- Mostrar el ícono de PDF o un mensaje si no hay archivo -->
                                             @isset($curso->certificado_pdf)
-                                            <div class="d-flex align-items-center mb-2">
-                                                <p class="mb-0 mr-2">Archivo actual:</p>
-                                                <p class="mb-0 font-weight-bold mr-2">{{ $curso->nombre_curso }}</p>
-                                                <a href="{{ asset('storage/' . $curso->certificado_pdf) }}" target="_blank" class="d-flex align-items-center">
-                                                    <i class="fas fa-file-pdf fa-1x text-primary"></i>
-                                                </a>
-                                            </div>
+                                                <div class="d-flex align-items-center mb-2">
+                                                    <p class="mb-0 mr-2">Archivo actual:</p>
+                                                    <p class="mb-0 font-weight-bold mr-2">{{ $curso->nombre_curso }}</p>
+                                                    <a href="{{ asset('storage/' . $curso->certificado_pdf) }}" target="_blank" class="d-flex align-items-center">
+                                                        <i class="fas fa-file-pdf fa-1x text-primary"></i>
+                                                    </a>
+                                                </div>
                                             @else
-                                            <p class="text-muted">{{ __('No hay certificado disponible') }}</p>
+                                                <p class="text-muted">{{ __('No hay certificado disponible') }}</p>
                                             @endisset
 
                                             <!-- Campo para subir un nuevo certificado -->

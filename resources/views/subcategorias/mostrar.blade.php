@@ -23,7 +23,7 @@
 
                     <x-text size="h6" color="black" :value="__('Descripcion')" class="mt-4" />
                     @if ($subcategoria->descripcion != null)
-                    <x-text size="h6" style="font-weight-normal" color="black" :value="$subcategoria->descripcion" />
+                        <x-text size="h6" style="font-weight-normal" color="black" :value="$subcategoria->descripcion" />
                     @else
                     {{ __('No registrada') }}
                     @endif

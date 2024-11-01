@@ -15,7 +15,6 @@
                 </x-slot:header>
 
                 <x-slot:body>
-
                     <x-text size="h6" color="black" :value="__('Proyecto')" class="mt-4"/>
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$elemento->proyecto->proyecto" />
 
@@ -44,7 +43,7 @@
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$novedad->tipoNovedad->tipo_novedad" />
 
                     <x-text size="h6" color="black" :value="__('Empleado')" class="mt-4"/>
-                    <x-text size="h6" style="font-weight-normal" color="black" :value="$novedad->empleado->empleado" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$novedad->empleado->nombres_completos" />
 
                     <x-text size="h6" color="black" :value="__('Novedad')" class="mt-4"/>
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$novedad->novedad" />
@@ -54,9 +53,7 @@
 
                     <x-text size="h6" color="black" :value="__('Fecha Cierre')" class="mt-4"/>
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$novedad->fecha_cierre" />
-
                 </x-slot:body>
-
                 <x-slot:footer>
                 </x-slot:footer>
             </x-card>

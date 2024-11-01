@@ -37,13 +37,8 @@
                         @foreach ($detalle_entrega_elementos as $detalle)
                             <div class="form-group">
                                 <!-- Mostrar el nombre del elemento relacionado -->
-                                <x-input-label :value="__('Cantidad Entregada del Elemento: ' . $detalle->elemento->item->item)"
-                                    for="cantidad_entregada_{{ $detalle->id_detalle_entrega_elemento }}" />
-
-                                <x-input type="number"
-                                    id="cantidad_entregada_{{ $detalle->id_detalle_entrega_elemento }}"
-                                    name="cantidad_entregada[{{ $detalle->id_detalle_entrega_elemento }}]"
-                                    :value="$detalle->cantidad" />
+                                <x-input-label :value="__('Cantidad Entregada del Elemento: ' . $detalle->elemento->item->item)" for="cantidad_entregada_{{ $detalle->id_detalle_entrega_elemento }}" />
+                                <x-input type="number" id="cantidad_entregada_{{ $detalle->id_detalle_entrega_elemento }}" name="cantidad_entregada[{{ $detalle->id_detalle_entrega_elemento }}]" :value="$detalle->cantidad" />
                             </div>
                         @endforeach
 
@@ -66,11 +61,8 @@
 
                                 <div class="col-6">
                                     <div class="form-group mb-0">
-                                        <x-input-label :value="__('Cantidad a devolver')"
-                                            for="input_{{ $detalle_entrega_elemento->elemento->id_elemento }}" />
-                                        <x-input type="number"
-                                            id="input_{{ $detalle_entrega_elemento->elemento->id_elemento }}"
-                                            name="cantidades[]" disabled />
+                                        <x-input-label :value="__('Cantidad a devolver')" for="input_{{ $detalle_entrega_elemento->elemento->id_elemento }}" />
+                                        <x-input type="number" id="input_{{ $detalle_entrega_elemento->elemento->id_elemento }}" name="cantidades[]" disabled />
                                         <x-input-error :messages="$errors->get(
                                             'input_{{ $detalle_entrega_elemento->elemento->id_elemento }}',
                                         )" />

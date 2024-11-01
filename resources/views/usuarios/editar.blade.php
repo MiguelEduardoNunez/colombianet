@@ -49,6 +49,13 @@
                             <x-input type="email" id="email" name="email" :value="$usuario->email" />
                             <x-input-error :messages="$errors->get('email')" />
                         </div>
+
+                        <div class="form-group">
+                            <x-input-label :value="__('Contrasena')" for="password" />
+                            <x-input type="password" id="password" name="password" />
+                            <x-input-error :messages="$errors->get('password')" />
+                        </div>
+
                     </x-slot:body>
 
                     <x-slot:footer>

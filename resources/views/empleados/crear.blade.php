@@ -76,7 +76,7 @@
                                             <select id="tipo_sangre" name="tipo_sangre" class="form-control select2">
                                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                                                 @foreach (['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'] as $tipo)
-                                                <option value="{{ $tipo }}">{{ $tipo }}</option>
+                                                    <option value="{{ $tipo }}">{{ $tipo }}</option>
                                                 @endforeach
                                             </select>
                                             <x-input-error :messages="$errors->get('tipo_sangre')" />

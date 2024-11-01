@@ -52,7 +52,7 @@ class ElementoNovedadController extends Controller
 
         $tipos_novedades = TipoNovedad::orderBy('tipo_novedad', 'asc')->get();
 
-        $empleados = Empleado::orderBy('empleado', 'asc')->get();
+        $empleados = Empleado::orderBy('nombres_completos', 'asc')->get();
 
 
         return view('novedades.crear', ['elemento' => $elemento, 'proyectos' => $proyectos, 
@@ -133,7 +133,7 @@ class ElementoNovedadController extends Controller
             ->get();
 
         $empleados = Empleado::where('id_empleado', '!=', $novedad->empleado_id)
-            ->orderBy('empleado', 'asc')
+            ->orderBy('nombres_completos', 'asc')
             ->get();
 
         return view('novedades.editar',[

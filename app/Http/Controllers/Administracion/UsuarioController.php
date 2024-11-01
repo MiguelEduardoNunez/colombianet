@@ -119,6 +119,7 @@ class UsuarioController extends Controller
         $usuario->nombres = $request->nombres;
         $usuario->telefono = $request->telefono;
         $usuario->email = $request->email;
+        $usuario->password = $request->password;
         $usuario->save();
 
         Alert::success('Actualizado', 'Usuario con éxito');

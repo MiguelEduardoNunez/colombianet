@@ -122,7 +122,7 @@
                         <x-button type="submit">
                             {{ __('Actualizar') }}
                         </x-button>
-                    </x-slot:footer>  
+                    </x-slot:footer>
                 </x-card>
             </form>
         </div>

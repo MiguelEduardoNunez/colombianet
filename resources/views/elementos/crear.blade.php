@@ -15,7 +15,7 @@
                 <x-card>
                     <x-slot:header>
                         <x-text :value="__('Registrar Elemento')" class="text-center" />
-                    </x-slot:header>    
+                    </x-slot:header>
 
                     <x-slot:body>
                         <div class="form-group">

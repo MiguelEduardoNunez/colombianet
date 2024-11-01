@@ -15,7 +15,7 @@
                 <x-card>
                     <x-slot:header>
                         <x-text :value="__('Registrar Novedad')" class="text-center" />
-                    </x-slot:header>   
+                    </x-slot:header>
 
                     <x-slot:body>
 
@@ -41,8 +41,7 @@
 
                         <div class="form-group">
                             <x-input-label :value="__('Tipos Novedades')" for="tipo_novedad" />
-                            <x-select :elements="$tipos_novedades" identifier="id_tipo_novedad" label="tipo_novedad"
-                                id="tipo_novedad" name="tipo_novedad">
+                            <x-select :elements="$tipos_novedades" identifier="id_tipo_novedad" label="tipo_novedad" id="tipo_novedad" name="tipo_novedad">
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
                             <x-input-error :messages="$errors->get('tipo_novedad')" />
@@ -51,8 +50,7 @@
 
                         <div class="form-group">
                             <x-input-label :value="__('Empleados')" for="empleado" />
-                            <x-select :elements="$empleados" identifier="id_empleado" label="empleado" id="empleado"
-                                name="empleado">
+                            <x-select :elements="$empleados" identifier="id_empleado" label="nombres_completos" id="empleado" name="empleado">
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
                             <x-input-error :messages="$errors->get('empleado')" />
@@ -68,8 +66,7 @@
                         <div class="form-group">
                             <x-input-label :value="__('Fecha Reporte')" for="fecha_reporte" />
                             <x-input-group id="fecha_reporte" data-target-input="nearest">
-                                <x-input type="text" class="datetimepicker-input" name="fecha_reporte"
-                                    :value="old('fecha_reporte')" data-target="#fecha_reporte" />
+                                <x-input type="text" class="datetimepicker-input" name="fecha_reporte" :value="old('fecha_reporte')" data-target="#fecha_reporte" />
                                 <x-slot:icon data-target="#fecha_reporte" data-toggle="datetimepicker">
                                     <i class="fas fa-calendar text-primary"></i>
                                 </x-slot:icon>
@@ -105,8 +102,8 @@
 <script>
     // Date picker
     $("#fecha_reporte, #fecha_cierre").datetimepicker({
-                format: 'YYYY/MM/DD',
-                locale: 'es'
-            });
+        format: 'YYYY/MM/DD',
+        locale: 'es'
+    });
 
 </script>

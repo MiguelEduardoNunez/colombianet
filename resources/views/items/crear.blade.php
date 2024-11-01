@@ -4,9 +4,7 @@
     </x-slot>
 
     <div class="row justify-content-center">
-
         <div class="col-12 col-md-10 col-lg-6">
-            
             <form method="POST" action="{{ route('items.store') }}">
                 @csrf
                 <x-card>
@@ -28,7 +26,6 @@
                             <x-select :elements="$subcategorias" identifier="id_subcategoria" label="subcategoria" id="subcategoria" name="subcategoria" >
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
-                            
                             <x-input-error :messages="$errors->get('subcategoria')" />
                         </div>
 

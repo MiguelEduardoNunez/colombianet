@@ -88,11 +88,11 @@
                                 <p class="mb-0">{{ $curso->nombre_curso }}</p>
                                 <span class="ml-3">-</span>
                                 @if ($curso->certificado_pdf)
-                                <a href="{{ asset('storage/' . $curso->certificado_pdf) }}" target="_blank" class="btn btn-link">
-                                    {{ __('Ver Certificado') }} <i class="fas fa-file-pdf fa-1x text-primary ml-2"></i>
-                                </a>
+                                    <a href="{{ asset('storage/' . $curso->certificado_pdf) }}" target="_blank" class="btn btn-link">
+                                        {{ __('Ver Certificado') }} <i class="fas fa-file-pdf fa-1x text-primary ml-2"></i>
+                                    </a>
                                 @else
-                                <span class="ml-3">{{ __('No hay certificado disponible') }}</span>
+                                    <span class="ml-3">{{ __('No hay certificado disponible') }}</span>
                                 @endif
                             </div>
                             @endforeach

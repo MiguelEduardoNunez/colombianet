@@ -65,7 +65,7 @@
 
                 <x-slot:footer>
                     <div class="float-right">
-                        {{ $items->links() }} 
+                        {{ $items->links() }}
                     </div>
                 </x-slot:footer>
             </x-card>

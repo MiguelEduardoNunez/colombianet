@@ -69,9 +69,6 @@
                                                     <i class="fas fa-undo-alt" data-toggle="tooltip" title="Descargar Devolución de Elementos"></i>
                                                 </a>
                                         </div>
-                                        
-                                        
-
                                     </div>
                                 </td>
                             </tr>

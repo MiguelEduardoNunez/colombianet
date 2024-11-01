@@ -18,17 +18,11 @@
                     </x-slot:header>
 
                     <x-slot:body>
-
                         <div class="form-group">
                             <x-input-label :value="__('Categoria')" for="categoria" />
-                            <x-select :elements="$categorias" identifier="id_categoria" label="categoria" id="categoria"
-                                name="categoria">
-
-                                <option value="{{ $item->subcategoria->categoria->categoria }}" selected>
-                                    {{ $item->subcategoria->categoria->categoria }}</option>
-
+                            <x-select :elements="$categorias" identifier="id_categoria" label="categoria" id="categoria" name="categoria">
+                                <option value="{{ $item->subcategoria->categoria->categoria }}" selected>{{ $item->subcategoria->categoria->categoria }}</option>
                             </x-select>
-
                             <x-input-error :messages="$errors->get('categoria')" />
                         </div>
 
@@ -53,8 +47,6 @@
                             <x-text-area id="descripcion" name="descripcion" :value="$item->descripcion" />
                             <x-input-error :messages="$errors->get('descripcion')" />
                         </div>
-
-
                     </x-slot:body>
 
                     <x-slot:footer>

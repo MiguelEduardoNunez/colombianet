@@ -33,16 +33,14 @@
                                     <div class="row justify-content-center align-items-center">
                                         <div class="col-2">
                                             <a href="{{ route('empleados.show', $empleado->id_empleado) }}">
-                                                <i class="far fa-eye" data-toggle="tooltip"
-                                                    title="Detalles Empleado"></i>
+                                                <i class="far fa-eye" data-toggle="tooltip" title="Detalles Empleado"></i>
                                             </a>
                                         </div>
 
                                         <div class="col-2">
                                             <a href="{{ route('empleados.edit', $empleado->id_empleado) }}"
                                                 class="text-success">
-                                                <i class="far fa-edit" data-toggle="tooltip"
-                                                    title="Actualizar Empleado"></i>
+                                                <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Empleado"></i>
                                             </a>
                                         </div>
 
@@ -53,8 +51,7 @@
                                         </div>
                                         
                                         <div class="col-2">
-                                            <form method="POST"
-                                                action="{{ route('empleados.destroy', $empleado->id_empleado) }}">
+                                            <form method="POST" action="{{ route('empleados.destroy', $empleado->id_empleado) }}">
                                                 @csrf @method('DELETE')
                                                 <button type="submit" class="btn p-0">
                                                     <i class="fa fa-ban text-danger" data-toggle="tooltip" title="Suspender"></i>
