@@ -8,10 +8,10 @@
                 <i class="far fa-arrow-alt-circle-left fa-2x" data-toggle="tooltip" title="Regresar"></i>
             </a>
         </div>
-        <div class="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-2">
+        <div class="col-12 col-md-10 col-lg-9 offset-md-1">
             <form method="POST" action="{{ route('proyectos.entregas-elementos.store', $proyecto->id_proyecto) }}" id="formu">
                 @csrf
-                <x-card style="width: 555px">
+                <x-card>
                     <x-slot:header>
                         <x-text :value="__('Registrar Entrega de Elementos')" class="text-center" />
                     </x-slot:header>
@@ -57,7 +57,7 @@
 
                         <div class="form-group" id="val_elemento">
                             <x-input-label :value="__('Elemento')" for="elemento" />
-                            <x-select :elements="[]" identifier="id_item" label="item" id="elemento" name="elemento" />
+                            <x-select :elements="[]" identifier="id_item" label="concatenated" id="elemento" name="elemento" />
                             <x-input-error :messages="$errors->get('elemento')" />
                         </div>
 
@@ -156,8 +156,7 @@
                 });
 
                 resultado.forEach(function(res) {
-                    $("#elemento").append("<option value=" + res.id_elemento + ">" + res.item
-                        .item + "</option>");
+                    $("#elemento").append("<option value=" + res.id_elemento + ">" + res.item.item + " - " + res.serial +"</option>");
                 });
 
                 $("#elemento").prepend("<option selected disabled>Seleccionar</option>");
@@ -187,7 +186,6 @@
                 cantidad_disponible = Math.abs(parseFloat(resultado
                     .cantidad)); // Asegurarse que la cantidad sea positiva
             }
-
             $("#cantidad_disponible").val(cantidad_disponible);
         });
 
@@ -295,11 +293,14 @@
                                 "<td>" + entrega.elemento + "</td>" +
                                 "<td>" + entrega.tipo_cantidad + "</td>" +
                                 "<td>" + entrega.cantidad + "</td>" +
-                                "<td><button class='btn-eliminar' data-index='" + index +
-                                "'><i class='fas fa-trash-alt text-danger'></i></button></td>" +
+                                "<td class='d-flex justify-content-center align-items-center'>" +
+                                "<button class='btn-eliminar btn p-0 text-danger' data-index='" + index +
+                                "'><i class='far fa-trash-alt' data-toggle='tooltip' title='Eliminar'></i></button>" +
+                                "</td>" +
                                 "</tr>"
                             );
                         });
+
 
                         // Agregar elementos al formulario
                         $("#cantidad").after(
@@ -364,8 +365,6 @@
                 );
             });
 
-
-
             // Limpiar el campo de cantidad disponible
             $("#cantidad_disponible").val("");
 
@@ -380,7 +379,6 @@
             if (entregas.length === 0) {
                 $("#btn-registrar").attr("disabled", true);
             }
-
             // Limpiar el formulario
             limpiarFormulario();
         });

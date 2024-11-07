@@ -49,40 +49,36 @@ class ElementoEntradaController extends Controller
      */
     public function store(Request $request, string $id_proyecto)
     {
-        // Muestra todos los datos de la solicitud para depuración
-        // dd($request->all());
-        $elementoId = $request->elemento; // Obtener el ID del elemento directamente del formulario
+        $elementoId = $request->elemento; 
     
         // Asegúrate de que existe el elemento con el ID proporcionado
-        $elemento = Elemento::findOrFail($elementoId); // Usa findOrFail para buscar el elemento por su ID
+        $elemento = Elemento::findOrFail($elementoId);
     
         // Validación de la solicitud
         $request->validate([
             'cantidad' => 'required|numeric',
-            'fecha_entrada' => 'required|date|after_or_equal:today', // La fecha no puede ser en el pasado
+            'fecha_entrada' => 'required|date|after_or_equal:today',
             'descripcion' => 'nullable|string',
-            'elemento' => 'required|exists:elementos,id_elemento', // Asegúrate de que el ID del elemento exista
+            'elemento' => 'required|exists:elementos,id_elemento',
         ]);
     
         // Crear una nueva entrada de elemento
         $entrada = new EntradaElemento();
         $entrada->proyecto_id = $id_proyecto;
-        $entrada->elemento_id = $elemento->id_elemento; // Usa el ID del elemento
+        $entrada->elemento_id = $elemento->id_elemento;
         $entrada->cantidad = $request->cantidad;
         $entrada->fecha_entrada = $request->fecha_entrada;
         $entrada->descripcion = $request->descripcion;
         $entrada->save();
     
         // Actualizar la cantidad del elemento
-        $elemento->cantidad += $request->cantidad; // Aumentar la cantidad del elemento
-        $elemento->save(); // Guardar los cambios en el elemento
+        $elemento->cantidad += $request->cantidad;
+        $elemento->save();
     
         // Mostrar un mensaje de éxito y redirigir
         Alert::success('Registrada', 'Entrada con éxito');
         return redirect(route('entrada_elementos.index', $id_proyecto));
     }
-    
-    
 
     /**
      * Display the specified resource.

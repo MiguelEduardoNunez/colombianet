@@ -27,16 +27,16 @@
                     @foreach ($detalle_entrega_elementos as $detalle_entrega_elemento)
                         <div class="border-top border-primary mt-4">
                             <x-text size="h6" color="black" :value="__('Stand')" class="mt-4" />
-                            <x-text size="h6" style="font-weight-normal" color="black" :value="$detalle_entrega_elemento->elemento->stand->stand" /> 
+                            <x-text size="h6" style="font-weight-normal" color="black" :value="$detalle_entrega_elemento->elemento->stand->stand" />
 
                             <x-text size="h6" color="black" :value="__('Elemento')" class="mt-4" />
-                            <x-text size="h6" style="font-weight-normal" color="black" :value="$detalle_entrega_elemento->elemento->item->item" /> 
+                            <x-text size="h6" style="font-weight-normal" color="black" :value="$detalle_entrega_elemento->elemento->item->item" />
                             
                             <x-text size="h6" color="black" :value="__('Marca')" class="mt-4" />
-                            <x-text size="h6" style="font-weight-normal" color="black" :value="$detalle_entrega_elemento->elemento->marca" /> 
+                            <x-text size="h6" style="font-weight-normal" color="black" :value="$detalle_entrega_elemento->elemento->marca" />
 
                             <x-text size="h6" color="black" :value="__('Modelo')" class="mt-4" />
-                            <x-text size="h6" style="font-weight-normal" color="black" :value="$detalle_entrega_elemento->elemento->modelo" /> 
+                            <x-text size="h6" style="font-weight-normal" color="black" :value="$detalle_entrega_elemento->elemento->modelo" />
 
                             <x-text size="h6" color="black" :value="__('Tipo de Cantidad')" class="mt-4" />
                             <x-text size="h6" style="font-weight-normal" color="black" :value="$detalle_entrega_elemento->elemento->tipoCantidad->tipo_cantidad" /> 

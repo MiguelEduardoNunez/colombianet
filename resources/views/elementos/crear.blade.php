@@ -25,7 +25,7 @@
 
                         <div class="form-group">
                             <x-input-label :value="__('Stand')" for="stand" />
-                            <x-select :elements="$stands" identifier="id_stand" label="stand" id="stand" name="stand">
+                            <x-select :elements="$stands" identifier="id_stand" label="concatenated" id="stand" name="stand">
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
                             <x-input-error :messages="$errors->get('stand')" />

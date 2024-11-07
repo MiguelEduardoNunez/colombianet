@@ -72,7 +72,7 @@
 
     <div class="container">
         <div class="textencabezado">
-            <h3 class="textend">Fecha: {{ $proyecto->creado_en }}</h3>
+            <h3 class="textend">Fecha: {{ $entrega_elemento->creado_en }}</h3>
             <h1 class="textencabezado">ACTA ENTREGA DE EQUIPOS</h1>
             <p class="textencabezado">Con la presente acta se le hace entrega de los siguientes elementos al proyecto {{ $proyecto->proyecto }}</p>
         </div>
