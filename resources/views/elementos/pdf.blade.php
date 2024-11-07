@@ -80,7 +80,7 @@
 
         <div class="textencabezado">
             <h3 class="textend">Fecha: {{ $proyecto->creado_en }}</h3>
-            <h1 class="textencabezado"> ELEMENTOS DEL PROYECTO {{$proyecto->id_proyecto}}</h1>
+            <h1 class="textencabezado"> ELEMENTOS DEL PROYECTO {{$proyecto->proyecto}}</h1>
             <p class="textencabezado">En el presente documento se detallan los elementos del proyecto
                 {{ $proyecto->proyecto }}</p>
         </div>

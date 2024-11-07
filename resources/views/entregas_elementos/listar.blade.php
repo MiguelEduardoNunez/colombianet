@@ -35,12 +35,21 @@
                     </x-slot:header>
 
                     <x-slot:body class="table-responsive p-0" style="height: 400px;">
-                        <x-data-table :headers="['#', 'Proyecto', 'Empleado', 'Fecha de Entrega', 'Acciones']">
+                        <x-data-table :headers="['#', 'Proyecto', 'Empleado', 'Elemento', 'Fecha de Entrega', 'Acciones']">
                             @foreach ($entregas_elementos as $entrega_elemento)
+                           
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $proyecto->proyecto }}</td>
-                                <td>{{ $entrega_elemento->empleado->empleado }}</td>
+                                <td>{{ $entrega_elemento->empleado ? $entrega_elemento->empleado->nombres_completos : 'Empleado no encontrado' }}</td>
+                                <td>
+                                    @if ($entrega_elemento->detalleEntregaElemento->isNotEmpty())
+                                        {{ $entrega_elemento->detalleEntregaElemento->first()->elemento->item->item }}
+                                    @else
+                                        {{ 'Sin Elemento' }}
+                                    @endif
+                                </td>
+                                
                                 <td>{{ $entrega_elemento->fecha_entrega }}</td>
                                 <td class="text-center">
                                     <div class="row justify-content-center align-items-center">
@@ -49,24 +58,27 @@
                                                 <i class="far fa-eye" data-toggle="tooltip" title="Detalles Entrega de Elementos"></i>
                                             </a>
                                         </div>
-
                                         <div class="col-2">
-                                            <a href="{{route('proyectos.entregas-elementos.edit',[$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento])}}" class="text-success">
+                                            <a href="{{ route('proyectos.entregas-elementos.edit', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}" class="text-success">
                                                 <i class="far fa-edit" data-toggle="tooltip" title="Actualizar Entrega de Elementos"></i>
                                             </a>
                                         </div>
-
                                         <div class="col-2">
-                                            <a href="{{ route('proyectos.entregas-elementos.reporte', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}" class="text-info">
+                                            <a href="{{ route('proyectos.entregas-elementos.reporte', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}" class="text-info" target="_blank">
                                                 <i class="fas fa-file-download" data-toggle="tooltip" title="Descargar Entrega de Elementos"></i>
                                             </a>
                                         </div>
-
+                                        <div class="col-2">
+                                            <a href="{{ route('proyectos.entregas-elementos.reporte_devolucion', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}" class="text-info" target="_blank">
+                                                <i class="fas fa-undo-alt" data-toggle="tooltip" title="Descargar Devolución de Elementos"></i>
+                                            </a>
+                                        </div>
                                     </div>
                                 </td>
                             </tr>
                             @endforeach
                         </x-data-table>
+                        
                     </x-slot:body>
 
                     <x-slot:footer>
@@ -93,11 +105,10 @@
                 , cancelButtonText: "No, Cancelar"
                 , confirmButtonText: "Si, Eliminar"
             }).then((result) => {
-                if (result.value) {
-                    this.submit();
+                    if (result.value) {
+                        this.submit();
                 }
             })
         });
     });
-
 </script>

@@ -9,8 +9,7 @@
             </a>
         </div>
         <div class="col-12 col-md-10 col-lg-6 offset-md-1 offset-lg-2">
-            <form method="POST"
-                action="{{ route('proyectos.entregas-elementos.update', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}">
+            <form method="POST" action="{{ route('proyectos.entregas-elementos.update', [$proyecto->id_proyecto, $entrega_elemento->id_entrega_elemento]) }}">
                 @csrf
                 @method('PUT')
                 <x-card>
@@ -35,33 +34,53 @@
                                 disabled />
                         </div>
 
+                        @foreach ($detalle_entrega_elementos as $detalle)
+                            <div class="form-group">
+                                <!-- Mostrar el nombre del elemento relacionado -->
+                                <x-input-label :value="__('Cantidad Entregada del Elemento: ' . $detalle->elemento->item->item)"
+                                    for="cantidad_entregada_{{ $detalle->id_detalle_entrega_elemento }}" />
+
+                                <x-input type="number"
+                                    id="cantidad_entregada_{{ $detalle->id_detalle_entrega_elemento }}"
+                                    name="cantidad_entregada[{{ $detalle->id_detalle_entrega_elemento }}]"
+                                    :value="$detalle->cantidad" />
+                            </div>
+                        @endforeach
+
                         <hr>
 
                         @foreach ($detalle_entrega_elementos as $detalle_entrega_elemento)
                             <div class="form-check d-flex align-items-center">
                                 <input class="form-check-input elemento-checkbox" type="checkbox"
-                                    id="checkbox_{{ $detalle_entrega_elemento->elemento->item->id_item }}"
-                                    name="elementos_seleccionados[]" value="{{ $detalle_entrega_elemento->elemento->item->id_item }}"
+                                    id="checkbox_{{ $detalle_entrega_elemento->elemento->id_elemento }}"
+                                    name="elementos_seleccionados[]"
+                                    value="{{ $detalle_entrega_elemento->elemento->id_elemento }}"
                                     data-cantidad-entregada="{{ $detalle_entrega_elemento->cantidad }}"
-                                    data-input-id="input_{{ $detalle_entrega_elemento->elemento->item->id_item }}">
+                                    data-input-id="input_{{ $detalle_entrega_elemento->elemento->id_elemento }}">
                                 <label class="form-check-label col-6 mb-0"
-                                    for="checkbox_{{ $detalle_entrega_elemento->elemento->item->id_item }}">
-                                    {{ $detalle_entrega_elemento->elemento->item->item }} 
-                                    <br/>
+                                    for="checkbox_{{ $detalle_entrega_elemento->elemento->id_elemento }}">
+                                    {{ $detalle_entrega_elemento->elemento->item->item }}
+                                    <br />
                                     (Cantidad Entregada:{{ $detalle_entrega_elemento->cantidad }})
                                 </label>
 
                                 <div class="col-6">
                                     <div class="form-group mb-0">
-                                        <x-input-label :value="__('Cantidad a devolver')" for="input_{{ $detalle_entrega_elemento->elemento->item->id_item }}" />
-                                        <x-input type="number" id="input_{{ $detalle_entrega_elemento->elemento->item->id_item }}" name="cantidades[]" disabled />
-                                        <x-input-error :messages="$errors->get('input_{{ $detalle_entrega_elemento->elemento->item->id_item }}')" />
+                                        <x-input-label :value="__('Cantidad a devolver')"
+                                            for="input_{{ $detalle_entrega_elemento->elemento->id_elemento }}" />
+                                        <x-input type="number"
+                                            id="input_{{ $detalle_entrega_elemento->elemento->id_elemento }}"
+                                            name="cantidades[]" disabled />
+                                        <x-input-error :messages="$errors->get(
+                                            'input_{{ $detalle_entrega_elemento->elemento->id_elemento }}',
+                                        )" />
                                     </div>
                                 </div>
                             </div>
                             <x-input-error :messages="$errors->get('elementos_seleccionados')" />
                             <hr>
                         @endforeach
+
                     </x-slot>
 
                     <x-slot name="footer">
@@ -76,7 +95,7 @@
 </x-app-layout>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const checkboxes = document.querySelectorAll('.elemento-checkbox');
         const selectedElements = [];
 
@@ -84,9 +103,10 @@
             const cantidadInputId = checkbox.dataset.inputId;
             const cantidadInput = document.getElementById(cantidadInputId);
 
-            checkbox.addEventListener('change', function () {
+            checkbox.addEventListener('change', function() {
                 cantidadInput.disabled = !this.checked;
-                cantidadInput.value = ''; // Limpiar el valor del input al desactivar el checkbox
+                cantidadInput.value =
+                    ''; // Limpiar el valor del input al desactivar el checkbox
 
                 if (this.checked) {
                     cantidadInput.addEventListener('input', updateArray);
@@ -98,13 +118,16 @@
             });
 
             function updateArray() {
-                const elementoId = checkbox.dataset.inputId.split('_')[1]; // Obtener el ID de entrega del elemento
+                const elementoId = checkbox.value; // Obtener el ID del elemento
                 const cantidad = cantidadInput.value;
                 updateSelectedElements(elementoId, cantidad);
             }
 
             function addToSelectedElements(elementoId, cantidad) {
-                selectedElements.push({ elementoId, cantidad });
+                selectedElements.push({
+                    elementoId,
+                    cantidad
+                });
                 console.log(selectedElements);
             }
 

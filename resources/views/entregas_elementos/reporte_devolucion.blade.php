@@ -72,8 +72,8 @@
 
     <div class="container">
         <div class="textencabezado">
-            <h3 class="textend">Fecha: {{ $entrega_elemento->creado_en }}</h3>
-            <h1 class="textencabezado">ACTA ENTREGA DE EQUIPOS</h1>
+            <h3 class="textend">Fecha: {{ $entrega_elemento->actualizado_en }}</h3>
+            <h1 class="textencabezado">ACTA DEVOLUCION DE EQUIPOS</h1>
             <p class="textencabezado">Con la presente acta se le hace entrega de los siguientes elementos al proyecto {{ $proyecto->proyecto }}</p>
         </div>
 
@@ -86,7 +86,7 @@
                         <th>Marca</th>
                         <th>Modelo</th>
                         <th>Tipo de Cantidad</th>
-                        <th>Cantidad Entregada</th>
+                        <th>Cantidad Devuelta</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -97,7 +97,7 @@
                         <td>{{ $detalle_entrega_elemento->elemento->marca }}</td>
                         <td>{{ $detalle_entrega_elemento->elemento->modelo }}</td>
                         <td>{{ $detalle_entrega_elemento->elemento->tipoCantidad->tipo_cantidad }}</td>
-                        <td>{{ $detalle_entrega_elemento->cantidad }}</td>
+                        <td>{{ $detalle_entrega_elemento->cantidad_devolucionada ?: 'N/A' }}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -107,9 +107,7 @@
         <div>
             <p>Manifiesto que:</p>
             <ul>
-                <li>He recibido los equipos relacionados y me comprometo a cuidarlos y darles el manejo adecuado para cada actividad.</li>
-                <li>Que he sido instruido sobre el uso, mantenimiento y cuidados de estos.</li>
-                <li>Los equipos y herramientas que aquí se entregan son y serán de la empresa Colombianet y Sepcom ingeniería y Telecomunicaciones S.A.S. En todo momento, en caso de retiro por cualquier causa debe devolverlos de forma inmediata, si ocurriera la pérdida, daño o no devolución de los mismos, autorizo a mi empleador para que retenga de mi salario o liquidación definitiva el valor de los mismos.</li>
+                <li>He recibido los equipos de la devolución en buen estado.</li>
             </ul>
         </div>
 
@@ -125,10 +123,10 @@
                 </thead>
                 <tbody>
                     <tr>
+                        <td>{{ $entrega_elemento->empleado->nombres_completos }}</td>
+                        <td>Técnico</td>
                         <td>Leidy Viviana Bolaños</td>
                         <td>Almacén</td>
-                        <td>{{ $entrega_elemento->empleado->nombres_completos }}</td>
-                        <td>{{ $entrega_elemento->empleado->cargoEmpleado->cargo_empleado }}</td>
                     </tr>
                     <tr>
                         <th>Firma:</th>
@@ -137,10 +135,10 @@
                         <th>Cédula:</th>
                     </tr>
                     <tr>
+                        <td></td>
+                        <td>{{ $entrega_elemento->empleado->documento }}</td>
                         <td></td>
                         <td>1061720521</td>
-                        <td></td>
-                        <td></td>
                     </tr>
                 </tbody>
             </table>

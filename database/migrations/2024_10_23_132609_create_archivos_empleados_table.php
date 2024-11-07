@@ -11,17 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('modulos', function (Blueprint $table) {
+        Schema::create('empleados_archivos', function (Blueprint $table) {
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
 
-            $table->smallInteger('id_modulo')->autoIncrement();
-            $table->smallInteger('modulo_id');
-            $table->string('modulo', '100');
-            $table->string('ruta', '200');
-            $table->string('icono', '50');
-            $table->smallInteger('orden')->nullable();
-            $table->smallInteger('hijos')->nullable();
+            $table->integer('id_archivo_empleado')->autoIncrement();
+            $table->integer('empleado_id ');
+            $table->integer('tipo_archivo_id  ');
+            $table->string('archivo_empleado_pdf', '100');
+            $table->boolean('estado');
             $table->timestamp('creado_en');
             $table->timestamp('actualizado_en')->nullable();
         });
@@ -32,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('modulos');
+        Schema::dropIfExists('empleados_archivos');
     }
 };

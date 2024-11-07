@@ -11,17 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('modulos', function (Blueprint $table) {
+        Schema::create('tipos_cantidades', function (Blueprint $table) {
             $table->charset = 'utf8';
             $table->collation = 'utf8_spanish_ci';
-
-            $table->smallInteger('id_modulo')->autoIncrement();
-            $table->smallInteger('modulo_id');
-            $table->string('modulo', '100');
-            $table->string('ruta', '200');
-            $table->string('icono', '50');
-            $table->smallInteger('orden')->nullable();
-            $table->smallInteger('hijos')->nullable();
+            
+            $table->smallInteger('id_tipo_cantidad')->autoIncrement();
+            $table->string('tipo_cantidad', '50');
             $table->timestamp('creado_en');
             $table->timestamp('actualizado_en')->nullable();
         });
@@ -32,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('modulos');
+        Schema::dropIfExists('tipos_cantidades');
     }
 };

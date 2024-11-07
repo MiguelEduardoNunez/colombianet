@@ -6,21 +6,15 @@ use App\Imports\ElementoImport;
 use App\Models\Categoria;
 use App\Models\Elemento;
 use App\Models\Item;
-use App\Models\Novedad;
 use App\Models\Proyecto;
 use App\Models\ProyectoElemento;
 use App\Models\Stand;
 use App\Models\Subcategoria;
 use App\Models\TipoCantidad;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Barryvdh\DomPDF\PDF as DomPDFPDF;
-use Dompdf\Dompdf;
-use Illuminate\Contracts\Validation\Validator;
-use Illuminate\Support\Facades\DB;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
 use RealRashid\SweetAlert\Facades\Alert;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 
 
@@ -229,8 +223,6 @@ class ProyectoElementoController extends Controller
         $proyecto = Proyecto::find($id);
         $elementos = Elemento::where('proyecto_id', $id)->get();
 
-
-
         $pdf = PDF::loadView('elementos.pdf', ['proyecto' => $proyecto, 'elementos' => $elementos]);
         return $pdf->stream('elementos-' . $proyecto->proyecto . '.pdf');
     }
@@ -253,8 +245,6 @@ class ProyectoElementoController extends Controller
 
         return view('elementos.migrar', ['proyecto' => $proyecto, 'elementos' => $elementos, 'proyectos' => $proyectos]);
     }
-
-
 
     public function migrarElementosStore(Request $request, string $id_proyecto)
     {

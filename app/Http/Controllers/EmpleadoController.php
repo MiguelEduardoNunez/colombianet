@@ -22,7 +22,6 @@ use App\Models\TipoContrato;
 use App\Models\TipoDocumento;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -105,7 +104,7 @@ class EmpleadoController extends Controller
                 'eps' => ['nullable', 'numeric', 'exists:eps,id_eps'],
                 'eps_pdf' => ['nullable', 'file', 'mimes:pdf', 'max:2048'],
                 'estado' => ['required', 'in:Empleado,Retirado,Prospecto,Renuncia,Aprendiz,Despido'],
-                'fondo_cesantia_id' => ['nullable', 'numeric', 'exists:fondos_cesantias,id_fondo_cesantia'],
+                'fondo_cesatia_id' => ['nullable', 'numeric', 'exists:fondos_cesantias,id_fondo_cesantia'],
                 'fondo_pension_id' => ['nullable', 'numeric', 'exists:fondos_pensiones,id_fondo_pension'],
                 'nombre_acudiente' => ['required', 'string', 'max:150'],
                 'parentesco_acudiente' => ['required', 'string', 'max:50'],
@@ -148,7 +147,6 @@ class EmpleadoController extends Controller
             $empleado->estado = $request->estado;
             $empleado->fondo_pension_id = $request->fondo_pension;
             $empleado->fondo_cesantia_id = $request->fondo_cesantia;
-
             $empleado->save();
 
             // Crear historia clínica
@@ -177,9 +175,9 @@ class EmpleadoController extends Controller
                     ]);
 
                     DB::table('empleados_cursos')->insert([
-                        'empleado_id' => $empleado->id_empleado, // Asumimos que $empleado es el objeto del empleado
+                        'empleado_id' => $empleado->id_empleado,
                         'curso_id' => $curso->id_curso,
-                        'certificado_pdf' => $filePath, // Guardar el path del archivo del certificado
+                        'certificado_pdf' => $filePath,
                     ]);
                 }
             }
@@ -187,8 +185,6 @@ class EmpleadoController extends Controller
             Alert::success('Registrado', 'Empleado con éxito');
             return redirect(route('empleados.index'));
         } catch (\Exception $e) {
-            // Registrar el error en el log
-            Log::error('Error al guardar el empleado: ' . $e->getMessage());
 
             Alert::error('Error', 'Ocurrió un error al registrar el empleado.' . $e->getMessage());
             return redirect()->back()->withInput();
@@ -251,7 +247,6 @@ class EmpleadoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // dd($request->all());
         $validaciones = $request->validate([
             'nombres_completos' => ['required', 'string', 'max:100'],
             'apellidos_completos' => ['required', 'string', 'max:100'],
@@ -364,7 +359,6 @@ class EmpleadoController extends Controller
             }
         }
 
-
         Alert::success('Actualizado', 'Empleado con éxito');
         return redirect(route('empleados.index'));
     }
@@ -409,13 +403,12 @@ class EmpleadoController extends Controller
             ];
         });
     
-        // Pasamos $id_empleado directamente a la vista
-        return view('archivos_empleados.listar', compact('archivos', 'tipos_archivos', 'documentos', 'id_empleado'));
+        return view('archivos_empleados.listar', ['documentos' => $documentos, 'id_empleado' => $id_empleado, 'tipos_archivos' => $tipos_archivos, 'archivos' => $archivos]);
+        // compact('archivos', 'tipos_archivos', 'documentos', 'id_empleado')
     }
     
     public function storeArchivo(Request $request, string $id_empleado, string $tipo_archivo_id)
     {
-        // Validar el archivo
         $request->validate([
             'archivo' => 'required|file|mimes:pdf,doc,docx,jpg,png|max:5120',
         ]);
@@ -430,8 +423,8 @@ class EmpleadoController extends Controller
 
             // Guardar el registro en la base de datos
             ArchivoEmpleado::create([
-                'empleado_id' => $empleado->id_empleado, // Usar ID del empleado
-                'tipo_archivo_id' => $tipo_archivo->id_tipo_archivo, // Usar ID del tipo de archivo
+                'empleado_id' => $empleado->id_empleado,
+                'tipo_archivo_id' => $tipo_archivo->id_tipo_archivo,
                 'archivo_empleado_pdf' => $ruta,
                 'estado' => true,
                 'actualizado_en' => now(),
@@ -446,16 +439,13 @@ class EmpleadoController extends Controller
     {
         $empleado = Empleado::findOrFail($id_empleado);
         $tipo_archivo = TipoArchivo::findOrFail($id_documento);
-        // Obtiene el historial del archivo desde la base de datos
+       
         $historial = ArchivoEmpleado::where('empleado_id', $id_empleado)
             ->where('tipo_archivo_id', $id_documento)
             ->orderBy('actualizado_en', 'desc')
             ->get();
     
-        // Retorna la vista con el historial del archivo
         return view('archivos_empleados.historial', compact('empleado', 'historial', 'tipo_archivo', 'id_empleado'));
     }
-    
-
 }
 

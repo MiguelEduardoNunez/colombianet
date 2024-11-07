@@ -37,7 +37,7 @@ class TipoNovedadController extends Controller
     {
 
         $request->validate([
-            //regex para que solo acepte letras y espacios 
+            //regex para que solo acepte letras y espacios
             'tipo_novedad' => ['required', 'string', 'max:100', 'unique:tipos_novedades'],
             'descripcion' => ['nullable', 'string', 'max:100']
         ]);

@@ -26,12 +26,12 @@ class DevolucionElemento extends Model
      * Relationships associated with the model.
      */
     //detalle entrega elemento
-    public function detalleEntregaElemento()
+    public function detalleEntregaElemento():BelongsTo
     {
-        return $this->hasMany(DevolucionElemento::class, 'detalles_entregas_elementos_id',"entrega_elemento_id");
+        return $this->belongsTo(DevolucionElemento::class, 'detalle_entrega_id', 'entrega_elemento_id');
     }
 
-    public function proyecto()
+    public function proyecto():BelongsTo
     {
         return $this->belongsTo(Proyecto::class, 'proyecto_id','id_proyecto');
     }
