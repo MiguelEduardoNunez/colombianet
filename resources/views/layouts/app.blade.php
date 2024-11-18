@@ -29,6 +29,9 @@
     <!-- Sweet Alert2 -->
     <link rel="stylesheet" href="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.css') }}">
 
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css">
+
     <!-- AdminLTE App -->
     <link rel="stylesheet" href="{{ asset('adminlte/css/adminlte.css') }}">
 </head>
@@ -269,6 +272,9 @@
     <!-- Sweet Alert2 -->
     <script src="{{ asset('adminlte/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
 
+    <!-- DataTables -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+
     <!-- AdminLTE App -->
     <script src="{{ asset('adminlte/js/adminlte.js') }}"></script>
 
@@ -276,37 +282,37 @@
         $(function () {
             // Tooltip
             $('[data-toggle="tooltip"]').tooltip();
-
+    
             // Select2
             $(".select2").select2();
-
+    
             // Date picker
             $("#fecha_inicio, #fecha_fin").datetimepicker({
                 format: 'YYYY/MM/DD',
                 locale: 'es'
             });
-
+    
             $("#fecha_reporte, #fecha_cierre").datetimepicker({
                 format: 'YYYY/MM/DD',
                 locale: 'es'
             });
-
+    
             $("#fecha_entrada, #fecha_entrada").datetimepicker({
                 format: 'YYYY/MM/DD',
                 locale: 'es'
             });
-
-            // Searcher table
+    
+            // Searcher table personalizado
             $("#searchertable").on("keyup", function() {
-                var value = $(this).val().toLowerCase()
+                var value = $(this).val().toLowerCase();
                 $("#datatable tbody tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                })
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
             });
-        })
-
-        
+   
+        });
     </script>
+    
 </body>
 
 </html>

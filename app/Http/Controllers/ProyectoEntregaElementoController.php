@@ -250,7 +250,7 @@ class ProyectoEntregaElementoController extends Controller
     public function reporte(string $id_proyecto, string $id_entrega_elemento)
     {
         $proyecto = Proyecto::find($id_proyecto);
-
+        
         $entrega_elemento = EntregaElemento::find($id_entrega_elemento);
 
         $detalle_entrega_elementos = DetalleEntregaElemento::with(['elemento' => ['item', 'tipoCantidad']])

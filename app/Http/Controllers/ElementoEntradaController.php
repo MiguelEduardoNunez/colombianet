@@ -40,7 +40,17 @@ class ElementoEntradaController extends Controller
         $items = Item::orderBy('item', 'asc')->get();
 
         $proyecto = Proyecto::findOrFail($id_proyecto);
-        $elementos = Elemento::all();
+        // filtra los elementos que estén en el proyecto
+        $elementos = Elemento::with(['item', 'tipoCantidad'])
+        ->where('proyecto_id', '=', $id_proyecto)
+        ->orderBy('marca', 'asc')
+        ->get()
+        ->map(function ($elemento) {
+            // Asegúrate de que el elemento y el item existen antes de concatenar
+            $elemento->concatenated = $elemento->item->item . ' - ' . $elemento->serial;
+            return $elemento;
+        });
+        
         return view('entradas_elementos.crear', ['proyecto' => $proyecto, 'elementos' => $elementos, 'categorias' => $categorias, 'subcategorias' => $subcategorias, 'items' => $items]);
     }
 
@@ -83,10 +93,10 @@ class ElementoEntradaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id_proyecto, string $id_entrada_elementos)
+    public function show(string $id_proyecto, string $id_entrada_elemento)
     {
         $proyecto = Proyecto::findOrFail($id_proyecto);
-        $entrada = EntradaElemento::with('elemento')->findOrFail($id_entrada_elementos);
+        $entrada = EntradaElemento::with('elemento')->findOrFail($id_entrada_elemento);
     
         return view('entradas_elementos.mostrar', ['proyecto' => $proyecto,'entrada' => $entrada]);
     }

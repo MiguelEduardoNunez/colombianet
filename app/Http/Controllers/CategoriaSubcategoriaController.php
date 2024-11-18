@@ -75,7 +75,7 @@ class CategoriaSubcategoriaController extends Controller
 
         return view('subcategorias.mostrar', ['categoria' => $categoria, 'subcategoria' => $subcategoria]);
     }
-
+  
     /**
      * Show the form for editing the specified resource.
      */

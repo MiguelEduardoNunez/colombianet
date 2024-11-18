@@ -46,7 +46,7 @@
                         
                         <div class="form-group">
                             <x-input-label :value="__('Elemento')" for="elemento" />
-                            <x-select :elements="$elementos" identifier="id_elemento" label="marca" id="elemento" name="elemento">
+                            <x-select :elements="$elementos" identifier="id_elemento" label="concatenated" id="elemento" name="elemento">
                                 <option selected disabled>{{ __('Seleccionar') }}</option>
                             </x-select>
                             <x-input-error :messages="$errors->get('elemento')" />
@@ -135,9 +135,11 @@
             });
 
             resultadoElementos.forEach(function(res) {
-                $("#elemento").append("<option value="+res.id_elemento+">"+res.marca+"</option>"); // Asegúrate de que `marca` sea la propiedad correcta
+                $("#elemento").append("<option value="+res.id_elemento+">"+res.item.item + " - " + res.serial +"</option>"); // Asegúrate de que `marca` sea la propiedad correcta
             });
         });
+
+        
     });
 </script>
 

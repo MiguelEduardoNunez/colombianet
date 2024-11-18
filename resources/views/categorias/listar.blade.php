@@ -48,7 +48,7 @@
                                         </div>
                                         <div class="col-2">
                                             <form method="POST" action="{{route('categorias.destroy', $categoria->id_categoria)}}">
-                                              @csrf @method('DELETE')
+                                             @csrf @method('DELETE')
                                               <button type="submit" class="btn p-0">
                                                 <i class="far fa-trash-alt text-danger" data-toggle="tooltip" title="Eliminar Categoría"></i>
                                               </button>

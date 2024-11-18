@@ -51,7 +51,7 @@
                             <td class="text-center">
                                 <div class="row justify-content-center align-items-center">
                                     <div class="col-2">
-                                        <a href="{{ route('entrada_elementos.show', ['id_proyecto' => $proyecto->id_proyecto, 'id_entrada_elementos' => $entrada->id_entrada_elementos]) }}">
+                                        <a href="{{ route('entrada_elementos.show', ['id_proyecto' => $proyecto->id_proyecto, 'id_entrada_elemento' => $entrada->id_entrada_elemento]) }}">
                                             <i class="far fa-eye" data-toggle="tooltip" title="Detalles entrega"></i>
                                         </a>
                                     </div>

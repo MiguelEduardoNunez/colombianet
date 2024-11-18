@@ -52,8 +52,7 @@
                                     value="{{ $detalle_entrega_elemento->elemento->id_elemento }}"
                                     data-cantidad-entregada="{{ $detalle_entrega_elemento->cantidad }}"
                                     data-input-id="input_{{ $detalle_entrega_elemento->elemento->id_elemento }}">
-                                <label class="form-check-label col-6 mb-0"
-                                    for="checkbox_{{ $detalle_entrega_elemento->elemento->id_elemento }}">
+                                <label class="form-check-label col-6 mb-0" for="checkbox_{{ $detalle_entrega_elemento->elemento->id_elemento }}">
                                     {{ $detalle_entrega_elemento->elemento->item->item }}
                                     <br />
                                     (Cantidad Entregada:{{ $detalle_entrega_elemento->cantidad }})
@@ -98,8 +97,7 @@
             checkbox.addEventListener('change', function() {
                 cantidadInput.disabled = !this.checked;
                 cantidadInput.value =
-                    ''; // Limpiar el valor del input al desactivar el checkbox
-
+                    '';
                 if (this.checked) {
                     cantidadInput.addEventListener('input', updateArray);
                     addToSelectedElements(checkbox.value, cantidadInput.value);
@@ -110,7 +108,7 @@
             });
 
             function updateArray() {
-                const elementoId = checkbox.value; // Obtener el ID del elemento
+                const elementoId = checkbox.value;
                 const cantidad = cantidadInput.value;
                 updateSelectedElements(elementoId, cantidad);
             }
