@@ -135,7 +135,7 @@
             });
 
             resultadoElementos.forEach(function(res) {
-                $("#elemento").append("<option value="+res.id_elemento+">"+res.item.item + " - " + res.serial +"</option>"); // Asegúrate de que `marca` sea la propiedad correcta
+                $("#elemento").append("<option value="+res.id_elemento+">"+res.marca+"</option>"); // Asegúrate de que `marca` sea la propiedad correcta
             });
         });
 
