@@ -22,7 +22,7 @@ class EntradaElemento extends Model
      *
      * @var string
      */
-    protected $primaryKey = 'id_entrada_elementos';
+    protected $primaryKey = 'id_entrada_elemento';
 
     /**
      * Names of the timestamps.

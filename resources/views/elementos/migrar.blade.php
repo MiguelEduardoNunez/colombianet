@@ -48,8 +48,6 @@
                                 <hr>
                                 @endforeach
 
-
-
                                 <div class="form-group mt-4">
                                     <x-input-label :value="__('Proyecto De Destino')" for="proyecto_destino" />
                                     <x-select :elements="$proyectos" identifier="id_proyecto" label="proyecto" id="proyecto_destino" name="proyecto_destino">

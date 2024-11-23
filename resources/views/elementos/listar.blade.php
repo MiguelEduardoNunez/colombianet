@@ -60,13 +60,13 @@
                     </x-slot:header>
 
                     <x-slot:body class="table-responsive p-0" style="height: 400px;">
-                        <x-data-table :headers="['#', 'Proyecto', 'Elemento', 'Modelo', 'Tipo de Cantidad', 'Cantidad', 'Acciones']">
+                        <x-data-table :headers="['#', 'Proyecto', 'Elemento', 'Serial',  'Tipo Cantidad', 'Cantidad', 'Acciones']">
                             @foreach ($elementos as $elemento)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $proyecto->proyecto }}</td>
                                 <td>{{ $elemento->item->item }}</td>
-                                <td>{{ $elemento->modelo }}</td>
+                                <td>{{ $elemento->serial }}</td>
                                 <td>{{ $elemento->tipoCantidad->tipo_cantidad }}</td>
                                 @if ($elemento->cantidad > 5 && $elemento->cantidad <= 10) <td><span class="badge badge-pill badge-warning">{{ $elemento->cantidad }}</span></td>
                                     @elseif ($elemento->cantidad <= 5) <td><span class="badge badge-pill badge-danger">{{ $elemento->cantidad }}</span></td>

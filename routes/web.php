@@ -116,7 +116,7 @@ Route::middleware('auth')->group(function () {
     Route::get('proyectos/{id_proyecto}/entrada-elementos/create', [ElementoEntradaController::class, 'create'])->name('entrada_elementos.create');
     Route::post('proyectos/{id_proyecto}/entrada-elementos', [ElementoEntradaController::class, 'store'])->name('entrada_elementos.store');
     Route::get('proyectos/{id_proyecto}/entrada-elementos', [ElementoEntradaController::class, 'index'])->name('entrada_elementos.index');
-    Route::get('proyectos/{id_proyecto}/entrada-elementos/{id_entrada_elementos}', [ElementoEntradaController::class, 'show'])->name('entrada_elementos.show');
+    Route::get('proyectos/{id_proyecto}/entrada-elementos/{id_entrada_elemento}', [ElementoEntradaController::class, 'show'])->name('entrada_elementos.show');
 });
 
 // Rutas Entregas de Elementos

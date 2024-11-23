@@ -82,8 +82,9 @@ class ProyectoElementoController extends Controller
         ]);
 
         $elemento_registrado = Elemento::where('item_id', '=', $request->elemento)
-            ->where('marca', '=', $request->marca)
-            ->where('modelo', '=', $request->modelo)
+            ->where('serial', '=', $request->serial)
+            // ->where('marca', '=', $request->marca)
+            // ->where('modelo', '=', $request->modelo)
             ->first();
 
         if ($elemento_registrado == null) {
@@ -192,7 +193,7 @@ class ProyectoElementoController extends Controller
             $elemento->marca = $request->marca;
             $elemento->modelo = $request->modelo;
             $elemento->serial = $request->serial;
-            $elemento->span = $request->span;
+            $elemento->span = $request->span; 
             $elemento->codigo_barras = $request->codigo_barras;
             $elemento->grosor = $request->grosor;
             $elemento->peso = $request->peso;

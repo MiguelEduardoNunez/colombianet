@@ -82,7 +82,7 @@
                                 </div>
                             </div>
 
-                            <h4 class="mt-4">{{ __('Cursos Realizados') }}</h4>
+                            <h3 class="mt-4 text-info">{{ __('Cursos Realizados') }}</h3>
                             @foreach ($cursos as $curso)
                             <div class="d-flex align-items-center">
                                 <p class="mb-0">{{ $curso->nombre_curso }}</p>

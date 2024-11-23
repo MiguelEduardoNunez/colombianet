@@ -16,7 +16,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        $categorias = Categoria::orderby('categoria', 'asc')->paginate(10);
+        $categorias = Categoria::orderby('categoria', 'asc')->paginate(100);
 
         return view('categorias.listar', ['categorias' => $categorias]);
     }

@@ -19,7 +19,7 @@
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$proyecto->proyecto" />
 
                     <x-text size="h6" color="black" :value="__('Stand')" class="mt-4" />
-                    <x-text size="h6" style="font-weight-normal" color="black" :value="$elemento->stand->stand" />
+                    <x-text size="h6" style="font-weight-normal" color="black" :value="$elemento->stand->stand . ' - ' . $elemento->stand->ubicacion" />
 
                     <x-text size="h6" color="black" :value="__('Categoria')" class="mt-4" />
                     <x-text size="h6" style="font-weight-normal" color="black" :value="$elemento->item->subcategoria->categoria->categoria" />
